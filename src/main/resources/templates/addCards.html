@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+
+<h1>Card form</h1>
+
+<form th:action="@{/cards/add}" th:object="${cardForm}" method="post">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" autofocus="autofocus">
+
+    <label for="set">Set</label>
+    <input type="text" id="set" name="set">
+
+    <label for="grade">Grade</label>
+    <input type="text" id="grade" name="grade">
+
+    <label for="altered">Altered</label>
+    <input type="text" id="altered" name="altered">
+
+    <label for="manaCost">Mana cost</label>
+    <input type="text" id="manaCost" name="manaCost">
+
+    <label for="type">Type</label>
+    <input type="text" id="type" name="type">
+
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description">
+
+    <br/>
+    <input type="submit" value="Create">
+</form>
+
+</body>
+</html>

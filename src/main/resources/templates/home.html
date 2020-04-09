@@ -5,7 +5,9 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>This is your homepage</h1>
+    <h1>Welcome <a th:text="${currentUser.username}"></a>, this is your homepage!</h1>
+
+    <a href="/cards/add">Add cards</a>
 
 </body>
 </html>

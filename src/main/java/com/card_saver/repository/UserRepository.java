@@ -9,10 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @Repository
 public class UserRepository {
@@ -21,8 +18,8 @@ public class UserRepository {
     JdbcTemplate jdbcTemplate;
 
     @Transactional
-    public User createUser(User user){
-        String sql = "INSERT INTO USERS " + "(USERNAME, PASSWORD) VALUES (?, ?)";
+    public void createUser(User user){
+        String sql = "INSERT INTO USERS (USERNAME, PASSWORD) VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "')";
 
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -30,15 +27,30 @@ public class UserRepository {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-                ps.setString(1, user.getUsername());
-                ps.setString(2, user.getPassword());
-
                 return ps;
             }
         }, holder);
 
-        int generatedUserId = holder.getKey().intValue();
-        user.setId(generatedUserId);
-        return user;
+        user.setId(holder.getKey().intValue());
+    }
+
+    @Transactional
+    public Boolean validateUserExists(User user){
+        String sql = "SELECT COUNT(*) FROM USERS WHERE USERNAME = '" + user.getUsername() + "' AND PASSWORD = '" + user.getPassword() + "'";
+
+        int count = jdbcTemplate.queryForObject(sql, int.class);
+
+        if(count > 0){
+           return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Transactional
+    public int getUserId(User user){
+        String userIdSql = "SELECT USERID FROM USERS WHERE USERNAME = '" + user.getUsername() + "' AND PASSWORD = '" + user.getPassword() + "'";
+        return jdbcTemplate.queryForObject(userIdSql, int.class);
+
     }
 }
