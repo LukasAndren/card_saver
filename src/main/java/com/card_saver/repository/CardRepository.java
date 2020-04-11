@@ -10,10 +10,9 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class CardRepository {
@@ -47,5 +46,50 @@ public class CardRepository {
 
         card.setId(holder.getKey().intValue());
         return card;
+    }
+
+    @Transactional
+    public List<Card> getCurrentUsersCards(User user){
+        String sql = "SELECT * FROM CARDS WHERE CARDUSERID = " + user.getId();
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                new Card(
+                        rs.getInt("cardId"),
+                        rs.getString("cardName"),
+                        rs.getString("cardSet"),
+                        rs.getString("cardGrade"),
+                        rs.getString("cardAltered"),
+                        rs.getString("cardManaCost"),
+                        rs.getString("cardType"),
+                        rs.getString("cardDescription"),
+                        rs.getInt("cardUserId"))
+                );
+    }
+
+    @Transactional
+    public Card findById(int cardId){
+        String sql = "SELECT * FROM CARDS WHERE CARDID = " + cardId;
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+                new Card(
+                        rs.getInt("cardId"),
+                        rs.getString("cardName"),
+                        rs.getString("cardSet"),
+                        rs.getString("cardGrade"),
+                        rs.getString("cardAltered"),
+                        rs.getString("cardManaCost"),
+                        rs.getString("cardType"),
+                        rs.getString("cardDescription"),
+                        rs.getInt("cardUserId"))
+                );
+    }
+
+    @Transactional
+    public void updateCard(Card card){
+        String sql = "UPDATE CARDS SET CARDNAME = ?, CARDSET = ?, CARDGRADE = ?, CARDALTERED = ?, CARDMANACOST = ?, " +
+                "CARDTYPE = ?, CARDDESCRIPTION = ?, CARDUSERID = ? WHERE CARDID = ?";
+
+        jdbcTemplate.update(sql, card.getName(), card.getSet(), card.getGrade(), card.getAltered(), card.getManaCost(),
+                card.getType(), card.getDescription(), card.getUserId(), card.getId());
+
     }
 }

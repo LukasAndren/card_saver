@@ -2,37 +2,77 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>Add Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 </head>
 <body>
 
-<h1>Card form</h1>
+<!-- Navigation -->
+    <nav class="nav-wrapper grey darken-2">
+        <div class="container">
+            <a class="brand-logo center">Create a Card</a>
+            <ul class="right">
+                <li><a th:href="@{/home}">Home</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<form th:action="@{/cards/add}" th:object="${cardForm}" method="post">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" autofocus="autofocus">
+    <!-- Create through form -->
+    <div class="row section" style="padding-top: 25px;">
+        <div class="col l6">
+            <div class="container">
+                <form th:action="@{/cards/create}" th:object="${cardForm}" method="post">
+                    <div class="row">
+                        <div class="col l6">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" autofocus="autofocus">
+                        </div>
 
-    <label for="set">Set</label>
-    <input type="text" id="set" name="set">
+                        <div class="col l6">
+                            <label for="set">Set</label>
+                            <input type="text" id="set" name="set">
+                        </div>
+                    </div>
+                    <div class ="row">
+                        <div class="col l6">
+                            <label for="grade">Grade</label>
+                            <input type="text" id="grade" name="grade">
+                        </div>
 
-    <label for="grade">Grade</label>
-    <input type="text" id="grade" name="grade">
+                        <div class="col l6">
+                            <label for="altered">Altered</label>
+                            <input type="text" id="altered" name="altered">
+                        </div>
+                    </div>
 
-    <label for="altered">Altered</label>
-    <input type="text" id="altered" name="altered">
+                    <div class="row">
+                        <div class="col l6">
+                            <label for="manaCost">Mana cost</label>
+                            <input type="text" id="manaCost" name="manaCost">
+                        </div>
 
-    <label for="manaCost">Mana cost</label>
-    <input type="text" id="manaCost" name="manaCost">
+                        <div class="col l6">
+                            <label for="type">Type</label>
+                            <input type="text" id="type" name="type">
+                        </div>
+                    </div>
 
-    <label for="type">Type</label>
-    <input type="text" id="type" name="type">
+                    <div class ="row">
+                        <div class="col l12">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" name="description">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="center">
+                            <input class="btn" type="submit" value="Create">
+                        </div>
+                    </div>
 
-    <label for="description">Description</label>
-    <input type="text" id="description" name="description">
-
-    <br/>
-    <input type="submit" value="Create">
-</form>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

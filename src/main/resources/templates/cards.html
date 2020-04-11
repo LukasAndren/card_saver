@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cards</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+</head>
+<body>
+
+<div class="grid-container">
+    <div class="header">
+        <h1>Your collection</h1>
+    </div>
+    <div class="navigation">
+        <a th:href="@{/home}">Homepage</a>
+    </div>
+    <div class="collection-table">
+        <table border="3">
+            <tr>
+                <th>Name:</th>
+                <th>Set:</th>
+                <th>Grade:</th>
+                <th>Altered:</th>
+                <th>Mana cost:</th>
+                <th>Type:</th>
+                <th>Description:</th>
+            </tr>
+            <tr th:each="card : ${currentUsersCards}">
+                <td th:text="${card.name}"></td>
+                <td th:text="${card.set}"></td>
+                <td th:text="${card.grade}"></td>
+                <td th:text="${card.altered}"></td>
+                <td th:text="${card.manaCost}"></td>
+                <td th:text="${card.type}"></td>
+                <td th:text="${card.description}"></td>
+                <td><a th:href="@{/cards/{cardId}/edit(cardId=${card.id})}">Edit</a></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

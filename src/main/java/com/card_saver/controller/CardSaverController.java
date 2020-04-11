@@ -7,9 +7,9 @@ import com.card_saver.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class CardSaverController {
@@ -20,13 +20,19 @@ public class CardSaverController {
     ICardService cardService;
 
     private User currentUser;
+    private List<Card> currentUsersCards;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLoginForm() {
+    @GetMapping(value = "/")
+    public String redirectToLogin() {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @GetMapping(value = "/login")
+    public String showLogin() {
+        return "login";
+    }
+
+    @PostMapping(value = "/login")
     public String login(@ModelAttribute(name = "loginForm") User user, Model model) {
 
         String username = user.getUsername();
@@ -37,23 +43,65 @@ public class CardSaverController {
         }
 
         currentUser = userService.handleLogin(user);
+        currentUsersCards = cardService.getAllUsersCards(currentUser);
+
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUsersCards", currentUsersCards);
 
         return "home";
 
     }
 
-    @RequestMapping(value = "/cards/add", method = RequestMethod.GET)
-    public String getAddCardsForm(){
+    @GetMapping(value = "/home")
+    public String showHome(Model model){
+        currentUsersCards = cardService.getAllUsersCards(currentUser);
+
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUsersCards", currentUsersCards);
+        return "home";
+    }
+
+    @GetMapping(value = "/cards/create")
+    public String showCreateCards(){
         return "addCards";
     }
 
-    @RequestMapping(value = "/cards/add", method = RequestMethod.POST)
-    public String addCards(@ModelAttribute(name = "cardForm") Card card, Model model){
+    @PostMapping(value = "/cards/create")
+    public String createCards(@ModelAttribute(name = "cardForm") Card card, Model model){
 
         cardService.createCard(card, currentUser);
 
-
         return "addCards";
+    }
+
+    @GetMapping(value = "/cards/{cardId}/edit")
+    public String showEditCard(Model model, @PathVariable int cardId){
+        Card card = cardService.findById(cardId);
+
+        model.addAttribute("card", card);
+
+        return "editCard";
+    }
+
+    @PostMapping(value = "/cards/{cardId}/edit")
+    public String updateCard(Model model, @PathVariable int cardId, @ModelAttribute("card") Card card){
+        card.setId(cardId);
+
+        cardService.updateCard(card);
+
+        currentUsersCards = cardService.getAllUsersCards(currentUser);
+        model.addAttribute("currentUsersCards", currentUsersCards);
+
+        return "cards";
+    }
+
+    @PostMapping(value = "/cards/search")
+    public String searchForCards(@ModelAttribute(name = "cardForm") Card card, Model model){
+
+        List<Card> filteredCards = cardService.filterCards(currentUsersCards, card);
+
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUsersCards", filteredCards);
+        return "home";
     }
 }

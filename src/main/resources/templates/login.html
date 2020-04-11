@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 </head>
 <body>
 
-    <h1>Login Form</h1>
+<nav class="nav-wrapper grey darken-2">
+    <div class= "container">
+        <a class = "brand-logo center">Welcome to Lukas's Card Saver</a>
+    </div>
+</nav>
 
+<div class = "container center" style = "padding-top: 5rem; width: 20rem;">
     <form th:action="@{/login}" th:object="${loginForm}" method="post">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" autofocus="autofocus">
@@ -15,8 +21,10 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password">
         <br/>
-        <input type="submit" value="Log in">
+        <input class = "btn" type="submit" value="Log in">
     </form>
+</div>
+
 
 </body>
 </html>

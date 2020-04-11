@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+</head>
+<body>
+
+    <h1>Edit a Card</h1>
+    <a th:href="@{/home}">Homepage</a>
+    </br>
+    <form th:action="@{/cards/{cardId}/edit(cardId=${card.id})}" th:object="${card}" method = "POST">
+        <table border="3">
+            <tr th:if="${card.id}">
+                <td>ID</td>
+                <td>:</td>
+                <td th:utext="${card.id}">...</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td><input type="text" th:field="*{name}"/></td>
+            </tr>
+            <tr>
+                <td>Set</td>
+                <td>:</td>
+                <td><input type="text" th:field="*{set}"/></td>
+            </tr>
+            <tr>
+                <td>Grade</td>
+                <td>:</td>
+                <td><input type="text" th:field="*{grade}"/></td>
+            </tr>
+            <tr>
+                <td>Altered</td>
+                <td>:</td>
+                <td><input type="text" th:field="*{altered}"/></td>
+            </tr>
+            <tr>
+                <td>Mana Cost</td>
+                <td>:</td>
+                <td><input type="text" th:field="*{manaCost}"/></td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>:</td>
+                <td><input type="text" th:field="*{type}"/></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>:</td>
+                <td><input type="text" th:field="*{description}"/></td>
+            </tr>
+            <tr>
+                <td>User ID</td>
+                <td>:</td>
+                <td><input type="number" th:field="*{userId}"/></td>
+            </tr>
+        </table>
+        <input type="submit" th:value="Update"/>
+    </form>
+
+</body>
+</html>

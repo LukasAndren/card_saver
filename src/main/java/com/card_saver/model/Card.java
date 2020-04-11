@@ -10,6 +10,22 @@ public class Card {
     private String manaCost;
     private String type;
     private String description;
+    private int userId;
+
+    public Card() {
+    }
+
+    public Card(int id, String name, String set, String grade, String altered, String manaCost, String type, String description, int userId) {
+        this.id = id;
+        this.name = name;
+        this.set = set;
+        this.grade = grade;
+        this.altered = altered;
+        this.manaCost = manaCost;
+        this.type = type;
+        this.description = description;
+        this.userId = userId;
+    }
 
     public int getId() {
         return id;
@@ -74,4 +90,8 @@ public class Card {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public int getUserId() { return userId; }
+
+    public void setUserId(int userId) { this.userId = userId; }
 }
