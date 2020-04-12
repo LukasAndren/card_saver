@@ -63,15 +63,22 @@ public class CardSaverController {
 
     @GetMapping(value = "/cards/create")
     public String showCreateCards(){
-        return "addCards";
+        return "createCard";
     }
 
-    @PostMapping(value = "/cards/create")
-    public String createCards(@ModelAttribute(name = "cardForm") Card card, Model model){
+    @PostMapping(value = "/cards/createform")
+    public String createCardsThroughForm(@ModelAttribute(name = "cardForm") Card card, Model model){
 
-        cardService.createCard(card, currentUser);
+        cardService.createCardThroughForm(card, currentUser);
 
-        return "addCards";
+        return "createCard";
+    }
+
+    @PostMapping(value = "/cards/createstring")
+    public String createCardsThroughText(@ModelAttribute(name = "cardString") String cardString, Model model){
+        cardService.createCardThroughString(cardString, currentUser);
+
+        return "createCard";
     }
 
     @GetMapping(value = "/cards/{cardId}/edit")

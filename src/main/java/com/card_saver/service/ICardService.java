@@ -6,9 +6,10 @@ import com.card_saver.model.User;
 import java.util.List;
 
 public interface ICardService {
-    public List<Card> getAllUsersCards(User user);
-    public void createCard(Card card, User user);
-    public Card findById(int cardId);
-    public void updateCard(Card card);
-    public List<Card> filterCards(List<Card> allCards, Card filterCard);
+    List<Card> getAllUsersCards(User user);
+    void createCardThroughForm(Card card, User user);
+    Boolean createCardThroughString(String cardString, User user);
+    Card findById(int cardId);
+    void updateCard(Card card);
+    List<Card> filterCards(List<Card> allCards, Card filterCard);
 }

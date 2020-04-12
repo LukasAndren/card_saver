@@ -15,6 +15,17 @@ public class Card {
     public Card() {
     }
 
+    public Card(String name, String set, String grade, String altered, String manaCost, String type, String description, int userId) {
+        this.name = name;
+        this.set = set;
+        this.grade = grade;
+        this.altered = altered;
+        this.manaCost = manaCost;
+        this.type = type;
+        this.description = description;
+        this.userId = userId;
+    }
+
     public Card(int id, String name, String set, String grade, String altered, String manaCost, String type, String description, int userId) {
         this.id = id;
         this.name = name;

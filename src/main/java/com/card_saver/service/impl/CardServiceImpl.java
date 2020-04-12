@@ -26,8 +26,52 @@ public class CardServiceImpl implements ICardService {
     }
 
     @Override
-    public void createCard(Card card, User user) {
+    public void createCardThroughForm(Card card, User user) {
         cardRepository.createCard(card, user);
+    }
+
+    @Override
+    public Boolean createCardThroughString(String cardString, User user){
+        Boolean success = true;
+
+        cardString = cardString.trim();
+
+        try{
+            int quantity = Integer.parseInt(cardString.substring(0, cardString.indexOf(";")).trim());
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
+
+            String name = cardString.substring(0, cardString.indexOf(";")).trim();
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
+
+            String set = cardString.substring(0, cardString.indexOf(";")).trim();
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
+
+            String grade = cardString.substring(0, cardString.indexOf(";")).trim();
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
+
+            String altered = cardString.substring(0, cardString.indexOf(";")).trim();
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
+
+            String manaCost = cardString.substring(0, cardString.indexOf(";")).trim();
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
+
+            String type = cardString.substring(0, cardString.indexOf(";")).trim();
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
+
+            String description = cardString.trim();
+
+            Card card = new Card(name, set, grade, altered, manaCost, type, description, user.getId());
+
+            for(int i = 0; i < quantity; i++){
+                cardRepository.createCard(card, user);
+            }
+
+        } catch (Exception e) {
+            success = false;
+            System.out.println("Could not create card through string: " + cardString + " Exception: " + e.toString());
+        }
+
+    return success;
     }
 
     @Override
