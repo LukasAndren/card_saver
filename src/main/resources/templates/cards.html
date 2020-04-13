@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Your Cards</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -24,6 +24,7 @@
                 <th>Mana cost:</th>
                 <th>Type:</th>
                 <th>Description:</th>
+                <th>Price:</th>
             </tr>
             <tr th:each="card : ${currentUsersCards}">
                 <td th:text="${card.name}"></td>
@@ -33,6 +34,8 @@
                 <td th:text="${card.manaCost}"></td>
                 <td th:text="${card.type}"></td>
                 <td th:text="${card.description}"></td>
+                <td th:text="${card.price}"></td>
+
                 <td><a th:href="@{/cards/{cardId}/edit(cardId=${card.id})}">Edit</a></td>
             </tr>
         </table>

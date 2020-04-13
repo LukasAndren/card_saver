@@ -8,98 +8,108 @@
 <body>
 
 <!-- Navigation -->
-    <nav class="nav-wrapper grey darken-2">
-        <div class="container">
-            <a class="brand-logo">Welcome </a>
-            <a class="brand-logo" style = "padding-left: 9rem;" th:text="${currentUser.username}"></a>
-            <a class="brand-logo center">Homepage</a>
-            <ul class="right">
-                <li><a th:href="@{/cards/create}">Create cards</a></li>
-            </ul>
-        </div>
-    </nav>
+<nav class="nav-wrapper grey darken-2">
+    <div class="container">
+        <a class="brand-logo">Welcome </a>
+        <a class="brand-logo" style="padding-left: 9rem;" th:text="${currentUser.username}"></a>
+        <a class="brand-logo center">Homepage</a>
+        <ul class="right">
+            <li><a th:href="@{/cards/create}">Create cards</a></li>
+        </ul>
+    </div>
+</nav>
 
 <!-- Search -->
-    <div class="row section" style="padding-top: 25px;">
-        <div class="col l6 offset-l3">
-            <div class="container">
-                <form th:action="@{/cards/search}" th:object="${cardForm}" method="post">
-                    <div class="row">
-                        <div class="col l3">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" autofocus="autofocus">
-                        </div>
-
-                        <div class="col l3">
-                            <label for="set">Set</label>
-                            <input type="text" id="set" name="set">
-                        </div>
-
-                        <div class="col l3">
-                            <label for="grade">Grade</label>
-                            <input type="text" id="grade" name="grade">
-                        </div>
-
-                        <div class="col l3">
-                            <label for="altered">Altered</label>
-                            <input type="text" id="altered" name="altered">
-                        </div>
+<div class="row section" style="padding-top: 25px;">
+    <div class="col l6 offset-l3">
+        <div class="container">
+            <form th:action="@{/cards/search}" th:object="${cardForm}" method="post">
+                <div class="row">
+                    <div class="col l3">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" autofocus="autofocus">
                     </div>
 
-                    <div class="row">
-                        <div class="col l4">
-                            <label for="manaCost">Mana cost</label>
-                            <input type="text" id="manaCost" name="manaCost">
-                        </div>
-
-                        <div class="col l4">
-                            <label for="type">Type</label>
-                            <input type="text" id="type" name="type">
-                        </div>
-
-                        <div class="col l4">
-                            <label for="description">Description</label>
-                            <input type="text" id="description" name="description">
-                        </div>
+                    <div class="col l3">
+                        <label for="set">Set</label>
+                        <input type="text" id="set" name="set">
                     </div>
 
-                    <div class="row">
-                        <div class="center">
-                            <input class="btn" type="submit" value="Search">
-                        </div>
+                    <div class="col l3">
+                        <label for="grade">Grade</label>
+                        <input type="text" id="grade" name="grade">
                     </div>
 
-                </form>
-            </div>
+                    <div class="col l3">
+                        <label for="altered">Altered</label>
+                        <input type="text" id="altered" name="altered">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col l3">
+                        <label for="manaCost">Mana cost</label>
+                        <input type="text" id="manaCost" name="manaCost">
+                    </div>
+
+                    <div class="col l3">
+                        <label for="type">Type</label>
+                        <input type="text" id="type" name="type">
+                    </div>
+
+                    <div class="col l3">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description">
+                    </div>
+                    <div class="col l3">
+                        <label for="price">Price (EU)</label>
+                        <input type="text" id="price" name="price">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="center">
+                        <input class="btn" type="submit" value="Search">
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
+</div>
 
+<div class="center">
+    <p>Currently showing <a th:text="${numberOfCards}"></a> card(s) with a total value of <a
+            th:text="${sumOfPrices}"></a> euro</p>
+</div>
 
 <!-- Card table -->
-    <div class="container">
-        <table border="3">
-            <tr>
-                <th>Name:</th>
-                <th>Set:</th>
-                <th>Grade:</th>
-                <th>Altered:</th>
-                <th>Mana cost:</th>
-                <th>Type:</th>
-                <th>Description:</th>
-                <th>Edit link:</th>
-            </tr>
-            <tr th:each="card : ${currentUsersCards}">
-                <td th:text="${card.name}"></td>
-                <td th:text="${card.set}"></td>
-                <td th:text="${card.grade}"></td>
-                <td th:text="${card.altered}"></td>
-                <td th:text="${card.manaCost}"></td>
-                <td th:text="${card.type}"></td>
-                <td th:text="${card.description}"></td>
-                <td><a th:href="@{/cards/{cardId}/edit(cardId=${card.id})}">Edit</a></td>
-            </tr>
-        </table>
-    </div>
+<div class="container">
+    <table border="3">
+        <tr>
+            <th>Name:</th>
+            <th>Set:</th>
+            <th>Grade:</th>
+            <th>Altered:</th>
+            <th>Mana cost:</th>
+            <th>Type:</th>
+            <th>Description:</th>
+            <th>Price (EU):</th>
+            <th>Edit link:</th>
+        </tr>
+        <tr th:each="card : ${currentUsersCards}">
+            <td th:text="${card.name}"></td>
+            <td th:text="${card.set}"></td>
+            <td th:text="${card.grade}"></td>
+            <td th:text="${card.altered}"></td>
+            <td th:text="${card.manaCost}"></td>
+            <td th:text="${card.type}"></td>
+            <td th:text="${card.description}"></td>
+            <td th:text="${card.price}"></td>
+            <td><a th:href="@{/cards/{cardId}/edit(cardId=${card.id})}">Edit</a></td>
+        </tr>
+    </table>
+</div>
 
 </body>
 </html>

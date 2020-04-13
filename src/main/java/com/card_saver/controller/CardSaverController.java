@@ -47,6 +47,10 @@ public class CardSaverController {
 
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("currentUsersCards", currentUsersCards);
+        if(currentUsersCards.size() > 0){
+            model.addAttribute("sumOfPrices", cardService.getTotalPrice(currentUsersCards));
+            model.addAttribute("numberOfCards", currentUsersCards.size());
+        }
 
         return "home";
 
@@ -58,6 +62,10 @@ public class CardSaverController {
 
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("currentUsersCards", currentUsersCards);
+        if(currentUsersCards.size() > 0){
+            model.addAttribute("sumOfPrices", cardService.getTotalPrice(currentUsersCards));
+            model.addAttribute("numberOfCards", currentUsersCards.size());
+        }
         return "home";
     }
 
@@ -97,9 +105,15 @@ public class CardSaverController {
         cardService.updateCard(card);
 
         currentUsersCards = cardService.getAllUsersCards(currentUser);
-        model.addAttribute("currentUsersCards", currentUsersCards);
 
-        return "cards";
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUsersCards", currentUsersCards);
+        if(currentUsersCards.size() > 0){
+            model.addAttribute("sumOfPrices", cardService.getTotalPrice(currentUsersCards));
+            model.addAttribute("numberOfCards", currentUsersCards.size());
+        }
+
+        return "home";
     }
 
     @PostMapping(value = "/cards/search")

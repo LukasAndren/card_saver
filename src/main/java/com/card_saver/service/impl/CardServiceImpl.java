@@ -59,7 +59,10 @@ public class CardServiceImpl implements ICardService {
             String description = cardString.substring(0, cardString.indexOf(";")).trim();
             cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
 
-            Card card = new Card(name, set, grade, altered, manaCost, type, description, user.getId());
+            String price = cardString.substring(0, cardString.indexOf(";")).trim();
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
+
+            Card card = new Card(name, set, grade, altered, manaCost, type, description, user.getId(), price);
 
             for(int i = 0; i < quantity; i++){
                 cardRepository.createCard(card, user);
@@ -93,10 +96,15 @@ public class CardServiceImpl implements ICardService {
             if(card.getName().contains(filterCard.getName()) && card.getSet().contains(filterCard.getSet())
             && card.getGrade().contains(filterCard.getGrade()) && card.getAltered().contains(filterCard.getAltered())
             && card.getManaCost().contains(filterCard.getManaCost()) && card.getType().contains(filterCard.getType())
-            && card.getDescription().contains(filterCard.getDescription())){
+            && card.getDescription().contains(filterCard.getDescription()) && card.getPrice().contains(filterCard.getPrice())){
                 filteredCards.add(card);
             }
         }
         return filteredCards;
+    }
+
+    @Override
+    public int getTotalPrice(List<Card> cards){
+        return cards.stream().filter(card -> Integer.parseInt(card.getPrice()) > 10).mapToInt(card -> Integer.parseInt(card.getPrice())).sum();
     }
 }

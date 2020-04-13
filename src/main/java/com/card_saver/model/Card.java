@@ -11,11 +11,12 @@ public class Card {
     private String type;
     private String description;
     private int userId;
+    private String price;
 
     public Card() {
     }
 
-    public Card(String name, String set, String grade, String altered, String manaCost, String type, String description, int userId) {
+    public Card(String name, String set, String grade, String altered, String manaCost, String type, String description, int userId, String price) {
         this.name = name;
         this.set = set;
         this.grade = grade;
@@ -24,9 +25,10 @@ public class Card {
         this.type = type;
         this.description = description;
         this.userId = userId;
+        this.price = price;
     }
 
-    public Card(int id, String name, String set, String grade, String altered, String manaCost, String type, String description, int userId) {
+    public Card(int id, String name, String set, String grade, String altered, String manaCost, String type, String description, int userId, String price) {
         this.id = id;
         this.name = name;
         this.set = set;
@@ -36,6 +38,7 @@ public class Card {
         this.type = type;
         this.description = description;
         this.userId = userId;
+        this.price = price;
     }
 
     public int getId() {
@@ -105,4 +108,8 @@ public class Card {
     public int getUserId() { return userId; }
 
     public void setUserId(int userId) { this.userId = userId; }
+
+    public String getPrice() { return price; }
+
+    public void setPrice(String price) { this.price = price; }
 }

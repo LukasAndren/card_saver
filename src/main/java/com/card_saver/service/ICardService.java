@@ -12,4 +12,5 @@ public interface ICardService {
     Card findById(int cardId);
     void updateCard(Card card);
     List<Card> filterCards(List<Card> allCards, Card filterCard);
+    int getTotalPrice(List<Card> cards);
 }

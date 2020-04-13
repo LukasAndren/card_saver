@@ -10,7 +10,7 @@
 <!-- Navigation -->
     <nav class="nav-wrapper grey darken-2">
         <div class="container">
-            <a class="brand-logo center">Create a Card</a>
+            <a class="brand-logo center">Create</a>
             <ul class="left">
                 <li><a th:href="@{/home}">Homepage</a></li>
             </ul>
@@ -22,7 +22,7 @@
 
             <!-- Create through form -->
             <div class="container">
-                <form th:action="@{/cards/createform}" th:object="${cardForm}" method="post">
+                <form th:action="@{/cards/createform}" th:object="${cardForm}" method="POST">
                     <div class="row">
                         <div class="col l6">
                             <label for="name">Name</label>
@@ -59,9 +59,13 @@
                     </div>
 
                     <div class ="row">
-                        <div class="col l12">
+                        <div class="col l6">
                             <label for="description">Description</label>
                             <input type="text" id="description" name="description">
+                        </div>
+                        <div class="col l6">
+                            <label for=price>Price</label>
+                            <input type="text" id="price" name="price">
                         </div>
                     </div>
                     <div class="row">
@@ -78,7 +82,7 @@
         <div class="col l6">
             <div class="container">
                 <form th:action="@{/cards/createstring}" th:object="${cardStringForm}" method="post" id="cardStringForm">
-                    <label style="font-size: 16px;" for="cardString">Format: Quantity; Name; Set; Grade; Altered; Mana cost; Type; Description;</label>
+                    <label style="font-size: 16px;" for="cardString">Format: Quantity; Name; Set; Grade; Altered; Mana cost; Type; Description; Price;</label>
                     <textarea style="height: 330px;" id="cardString" form="cardStringForm" type="text" name="cardString" class="materialize-textarea" th:text="${cardString}"></textarea>
                     <div class="row">
                         <div class="center" style="padding-top: 15px;">

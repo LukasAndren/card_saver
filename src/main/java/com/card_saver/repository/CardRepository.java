@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,8 +21,8 @@ public class CardRepository {
 
     @Transactional
     public Card createCard(Card card, User user){
-        String sql = "insert into cards (cardName, cardSet, cardGrade, cardAltered, cardManaCost, cardType, cardDescription, cardUserId) " +
-                "values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into cards (cardName, cardSet, cardGrade, cardAltered, cardManaCost, cardType, cardDescription, cardUserId, cardPrice) " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -39,6 +38,7 @@ public class CardRepository {
                 ps.setString(6, card.getType());
                 ps.setString(7, card.getDescription());
                 ps.setString(8, String.valueOf(user.getId()));
+                ps.setString(9, card.getPrice());
 
                 return ps;
             }
@@ -62,7 +62,8 @@ public class CardRepository {
                         rs.getString("cardManaCost"),
                         rs.getString("cardType"),
                         rs.getString("cardDescription"),
-                        rs.getInt("cardUserId"))
+                        rs.getInt("cardUserId"),
+                        rs.getString("cardPrice"))
                 );
     }
 
@@ -79,17 +80,19 @@ public class CardRepository {
                         rs.getString("cardManaCost"),
                         rs.getString("cardType"),
                         rs.getString("cardDescription"),
-                        rs.getInt("cardUserId"))
+                        rs.getInt("cardUserId"),
+                        rs.getString("cardPrice"))
+
                 );
     }
 
     @Transactional
     public void updateCard(Card card){
         String sql = "UPDATE CARDS SET CARDNAME = ?, CARDSET = ?, CARDGRADE = ?, CARDALTERED = ?, CARDMANACOST = ?, " +
-                "CARDTYPE = ?, CARDDESCRIPTION = ?, CARDUSERID = ? WHERE CARDID = ?";
+                "CARDTYPE = ?, CARDDESCRIPTION = ?, CARDUSERID = ?, CARDPRICE = ? WHERE CARDID = ?";
 
         jdbcTemplate.update(sql, card.getName(), card.getSet(), card.getGrade(), card.getAltered(), card.getManaCost(),
-                card.getType(), card.getDescription(), card.getUserId(), card.getId());
+                card.getType(), card.getDescription(), card.getUserId(), card.getPrice(), card.getId());
 
     }
 }
