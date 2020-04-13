@@ -31,9 +31,7 @@ public class CardServiceImpl implements ICardService {
     }
 
     @Override
-    public Boolean createCardThroughString(String cardString, User user){
-        Boolean success = true;
-
+    public void createCardThroughString(String cardString, User user){
         cardString = cardString.trim();
 
         try{
@@ -58,7 +56,8 @@ public class CardServiceImpl implements ICardService {
             String type = cardString.substring(0, cardString.indexOf(";")).trim();
             cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
 
-            String description = cardString.trim();
+            String description = cardString.substring(0, cardString.indexOf(";")).trim();
+            cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
 
             Card card = new Card(name, set, grade, altered, manaCost, type, description, user.getId());
 
@@ -66,12 +65,14 @@ public class CardServiceImpl implements ICardService {
                 cardRepository.createCard(card, user);
             }
 
-        } catch (Exception e) {
-            success = false;
-            System.out.println("Could not create card through string: " + cardString + " Exception: " + e.toString());
-        }
+            if(cardString.length() > 0){
+                createCardThroughString(cardString, user);
+            }
 
-    return success;
+        } catch (Exception e) {
+            System.out.println("Could not create card through string: '" + cardString + "'. With exception: ");
+            e.printStackTrace();
+        }
     }
 
     @Override

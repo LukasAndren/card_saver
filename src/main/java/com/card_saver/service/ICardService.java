@@ -8,7 +8,7 @@ import java.util.List;
 public interface ICardService {
     List<Card> getAllUsersCards(User user);
     void createCardThroughForm(Card card, User user);
-    Boolean createCardThroughString(String cardString, User user);
+    void createCardThroughString(String cardString, User user);
     Card findById(int cardId);
     void updateCard(Card card);
     List<Card> filterCards(List<Card> allCards, Card filterCard);
