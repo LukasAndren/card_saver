@@ -34,59 +34,29 @@ public class CardSaverController {
 
     @PostMapping(value = "/login")
     public String login(@ModelAttribute(name = "loginForm") User user, Model model) {
-
-        String username = user.getUsername();
-        String password = user.getPassword();
-
-        if (username.equals("admin") && password.equals("admin")) {
-            return "home";
-        }
-
         currentUser = userService.handleLogin(user);
-        currentUsersCards = cardService.getAllUsersCards(currentUser);
 
-        model.addAttribute("currentUser", currentUser);
-        model.addAttribute("currentUsersCards", currentUsersCards);
-        if(currentUsersCards.size() > 0){
-            model.addAttribute("sumOfPrices", cardService.getTotalPrice(currentUsersCards));
-            model.addAttribute("numberOfCards", currentUsersCards.size());
-        }
-
-        return "home";
-
+        return prepareNonSearchedHomePage(model);
     }
 
     @GetMapping(value = "/home")
     public String showHome(Model model){
-        currentUsersCards = cardService.getAllUsersCards(currentUser);
+        return prepareNonSearchedHomePage(model);
+    }
+
+    @PostMapping(value = "/cards/search")
+    public String searchForCards(@ModelAttribute(name = "cardForm") Card card, Model model){
+
+        List<Card> filteredCards = cardService.filterCards(currentUsersCards, card);
 
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("currentUsersCards", currentUsersCards);
-        if(currentUsersCards.size() > 0){
-            model.addAttribute("sumOfPrices", cardService.getTotalPrice(currentUsersCards));
-            model.addAttribute("numberOfCards", currentUsersCards.size());
+        model.addAttribute("currentUsersCards", filteredCards);
+        if(filteredCards.size() > 0){
+            model.addAttribute("sumOfPrices", cardService.getTotalPrice(filteredCards));
+            model.addAttribute("numberOfCards", filteredCards.size());
         }
+
         return "home";
-    }
-
-    @GetMapping(value = "/cards/create")
-    public String showCreateCards(){
-        return "createCard";
-    }
-
-    @PostMapping(value = "/cards/createform")
-    public String createCardsThroughForm(@ModelAttribute(name = "cardForm") Card card, Model model){
-
-        cardService.createCardThroughForm(card, currentUser);
-
-        return "createCard";
-    }
-
-    @PostMapping(value = "/cards/createstring")
-    public String createCardsThroughText(@ModelAttribute(name = "cardString") String cardString, Model model){
-        cardService.createCardThroughString(cardString, currentUser);
-
-        return "createCard";
     }
 
     @GetMapping(value = "/cards/{cardId}/edit")
@@ -104,7 +74,46 @@ public class CardSaverController {
 
         cardService.updateCard(card);
 
-        currentUsersCards = cardService.getAllUsersCards(currentUser);
+        return prepareNonSearchedHomePage(model);
+    }
+
+    @GetMapping(value = "/cards/{cardId}/delete")
+    public String deleteCard(Model model, @PathVariable int cardId){
+
+        cardService.deleteCard(cardId);
+
+        return prepareNonSearchedHomePage(model);
+    }
+
+    @GetMapping(value = "/cards/create")
+    public String showCreateCards(){
+        return "createCard";
+    }
+
+    @PostMapping(value = "/cards/createForm")
+    public String createCardsThroughForm(@ModelAttribute(name = "cardForm") Card card, Model model){
+        card.setUserId(currentUser.getId());
+
+        cardService.createCard(card);
+
+        return "createCard";
+    }
+
+    @PostMapping(value = "/cards/createstring")
+    public String createCardsThroughText(@ModelAttribute(name = "cardString") String cardString, Model model){
+        cardService.createCardThroughString(cardString, currentUser);
+
+        return "createCard";
+    }
+
+    /**
+     * Prepares the Model attributes needed by Thymeleaf to display the home page properly,
+     * and then returns the home page String.
+     * @param model - The Model being used by Thymeleaf
+     * @return "home", the String representing the HTML home page.
+     */
+    public String prepareNonSearchedHomePage(Model model){
+        currentUsersCards = cardService.getAllCardsFromUser(currentUser);
 
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("currentUsersCards", currentUsersCards);
@@ -113,16 +122,6 @@ public class CardSaverController {
             model.addAttribute("numberOfCards", currentUsersCards.size());
         }
 
-        return "home";
-    }
-
-    @PostMapping(value = "/cards/search")
-    public String searchForCards(@ModelAttribute(name = "cardForm") Card card, Model model){
-
-        List<Card> filteredCards = cardService.filterCards(currentUsersCards, card);
-
-        model.addAttribute("currentUser", currentUser);
-        model.addAttribute("currentUsersCards", filteredCards);
         return "home";
     }
 }

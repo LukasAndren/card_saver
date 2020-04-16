@@ -18,6 +18,7 @@
     </div>
 </nav>
 
+<!-- Edit form -->
 <div class="container center" style="padding-top: 35px;">
     <form th:action="@{/cards/{cardId}/edit(cardId=${card.id})}" th:object="${card}" method="POST">
         <div class="hide">

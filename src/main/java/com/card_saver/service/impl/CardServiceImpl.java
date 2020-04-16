@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles services/logic that results in/require Cards.
+ */
 @Service
 public class CardServiceImpl implements ICardService {
 
@@ -19,17 +22,23 @@ public class CardServiceImpl implements ICardService {
     private List<Card> currentUsersCards;
 
     @Override
-    public List<Card> getAllUsersCards(User user) {
-        currentUsersCards = cardRepository.getCurrentUsersCards(user);
+    public List<Card> getAllCardsFromUser(User user) {
+        currentUsersCards = cardRepository.getAllCardsFromUser(user);
 
         return currentUsersCards;
     }
 
     @Override
-    public void createCardThroughForm(Card card, User user) {
-        cardRepository.createCard(card, user);
+    public void createCard(Card card) {
+        cardRepository.saveCard(card);
     }
 
+    /**
+     * Creates a Card based on the parameter String using substrings to single out the Card's variables.
+     * The Card is also saved to the database and will belong to the input User.
+     * @param cardString - The string that contains the Card's variables.
+     * @param user - The user that the Card is linked to.
+     */
     @Override
     public void createCardThroughString(String cardString, User user){
         cardString = cardString.trim();
@@ -65,7 +74,7 @@ public class CardServiceImpl implements ICardService {
             Card card = new Card(name, set, grade, altered, manaCost, type, description, user.getId(), price);
 
             for(int i = 0; i < quantity; i++){
-                cardRepository.createCard(card, user);
+                cardRepository.saveCard(card);
             }
 
             if(cardString.length() > 0){
@@ -88,6 +97,13 @@ public class CardServiceImpl implements ICardService {
         cardRepository.updateCard(card);
     }
 
+    /**
+     * Returns a List of Cards whose parameters match the parameter Card's variables.
+     * If none of the Cards in the List match, a empty List is returned.
+     * @param allCards - The List of Cards that are to be filtered.
+     * @param filterCard - The Card used as the filter to match Cards from the List.
+     * @return The List of filtered Cards that matched the input Card.
+     */
     @Override
     public List<Card> filterCards(List<Card> allCards, Card filterCard) {
         List<Card> filteredCards = new ArrayList<>();
@@ -103,8 +119,30 @@ public class CardServiceImpl implements ICardService {
         return filteredCards;
     }
 
+    /**
+     * Returns the sum of all prices from Cards contained in the parameter List.
+     * If the parameter List's Cards have no prices or the List contains no Cards,
+     * the value of the return will be 0.
+     * @param cards - The List of Cards whose prices are to be summed up.
+     * @return The total sum of prices.
+     */
     @Override
     public int getTotalPrice(List<Card> cards){
-        return cards.stream().filter(card -> Integer.parseInt(card.getPrice()) > 10).mapToInt(card -> Integer.parseInt(card.getPrice())).sum();
+        int sum = 0;
+
+        for(Card card : cards){
+            try{
+                sum += Integer.parseInt(card.getPrice());
+            } catch (Exception e) {
+                System.out.println("Could not parse the value of card with price: " + card.getPrice() + ". Exception: " + e.toString());;
+            }
+        }
+
+        return sum;
+    }
+
+    @Override
+    public void deleteCard(int cardId) {
+        cardRepository.deleteCard(cardId);
     }
 }

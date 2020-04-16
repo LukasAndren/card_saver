@@ -78,8 +78,9 @@
     </div>
 </div>
 
+<!-- Stats -->
 <div class="center">
-    <p>Currently showing <a th:text="${numberOfCards}"></a> card(s) with a total value of <a
+    <p th:if="${numberOfCards != null}">Currently showing <a th:text="${numberOfCards}"></a> card(s) with a total value of <a
             th:text="${sumOfPrices}"></a> euro</p>
 </div>
 
@@ -95,7 +96,8 @@
             <th>Type:</th>
             <th>Description:</th>
             <th>Price (EU):</th>
-            <th>Edit link:</th>
+            <th></th>
+            <th></th>
         </tr>
         <tr th:each="card : ${currentUsersCards}">
             <td th:text="${card.name}"></td>
@@ -106,7 +108,8 @@
             <td th:text="${card.type}"></td>
             <td th:text="${card.description}"></td>
             <td th:text="${card.price}"></td>
-            <td><a th:href="@{/cards/{cardId}/edit(cardId=${card.id})}">Edit</a></td>
+            <td><a class="btn" th:href="@{/cards/{cardId}/edit(cardId=${card.id})}">Edit</a></td>
+            <td><a class="btn" th:href="@{/cards/{cardId}/delete(cardId=${card.id})}">Delete</a></td>
         </tr>
     </table>
 </div>
