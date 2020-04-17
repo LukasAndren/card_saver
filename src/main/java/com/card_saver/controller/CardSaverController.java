@@ -36,6 +36,11 @@ public class CardSaverController {
     public String login(@ModelAttribute(name = "loginForm") User user, Model model) {
         currentUser = userService.handleLogin(user);
 
+        if(currentUser.getId() == -1){
+            model.addAttribute("usernameNotUnique", currentUser.getUsername());
+            return "login";
+        }
+
         return prepareNonSearchedHomePage(model);
     }
 
@@ -90,8 +95,8 @@ public class CardSaverController {
         return "createCard";
     }
 
-    @PostMapping(value = "/cards/createForm")
-    public String createCardsThroughForm(@ModelAttribute(name = "cardForm") Card card, Model model){
+    @PostMapping(value = "/create/form")
+    public String createCardThroughForm(@ModelAttribute(name = "cardForm") Card card, Model model){
         card.setUserId(currentUser.getId());
 
         cardService.createCard(card);
@@ -99,7 +104,7 @@ public class CardSaverController {
         return "createCard";
     }
 
-    @PostMapping(value = "/cards/createstring")
+    @PostMapping(value = "/cards/create/string")
     public String createCardsThroughText(@ModelAttribute(name = "cardString") String cardString, Model model){
         cardService.createCardThroughString(cardString, currentUser);
 

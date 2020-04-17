@@ -8,13 +8,13 @@
 <body>
 
 <nav class="nav-wrapper grey darken-2">
-    <div class= "container">
-        <a class = "brand-logo center">Welcome to Lukas's Card Saver</a>
+    <div class="container">
+        <a class="brand-logo center">Welcome to Lukas's Card Saver</a>
     </div>
 </nav>
 
 <!-- Login form -->
-<div class = "container center" style = "padding-top: 5rem; width: 20rem;">
+<div class="container center" style = "padding-top: 10rem; width: 20rem;">
     <form th:action="@{/login}" th:object="${loginForm}" method="post">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" autofocus="autofocus">
@@ -22,8 +22,14 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password">
         <br/>
-        <input class = "btn" type="submit" value="Log in">
+        <input class="btn" type="submit" value="Log in">
     </form>
+
+<!-- Error container -->
+    <div class="container">
+        <p th:if="${usernameNotUnique}" style="font-size: 18; color: red;"
+           th:text="'The username ¨' + ${usernameNotUnique} + '¨ is already in use, please choose a new username.'"/>
+    </div>
 </div>
 
 

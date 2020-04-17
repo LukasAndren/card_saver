@@ -43,13 +43,13 @@ public class UserRepository {
     }
 
     /**
-     * Validates that the parameter User exists by counting the amount of rows
-     * that match the parameter User's id.
+     * Checks whether the parameter User exists by counting the amount of rows
+     * that match the parameter User's id in the database.
      * @param user - The User to be validated.
-     * @return Returns true - if the User exists in the database, and false if not.
+     * @return Returns true if the User exists in the database, and false if not.
      */
     @Transactional
-    public Boolean validateUserExists(User user){
+    public Boolean userExists(User user){
         String sql = "SELECT COUNT(*) FROM USERS WHERE USERNAME = '" + user.getUsername() + "' AND PASSWORD = '" + user.getPassword() + "'";
 
         int count = jdbcTemplate.queryForObject(sql, int.class);
@@ -70,6 +70,26 @@ public class UserRepository {
     public int getUserId(User user){
         String userIdSql = "SELECT USERID FROM USERS WHERE USERNAME = '" + user.getUsername() + "' AND PASSWORD = '" + user.getPassword() + "'";
         return jdbcTemplate.queryForObject(userIdSql, int.class);
+
+    }
+
+    /**
+     * Checks whether the parameter User's username is already in use by counting
+     * the amount of rows that match the parameter User's username in the database.
+     * @param user - The User whose username is to be validated.
+     * @return Returns true if the username already exists in the database, and false if not.
+     */
+    @Transactional
+    public Boolean usernameIsUnique(User user){
+        String sql = "SELECT COUNT(*) FROM USERS WHERE USERNAME = '" + user.getUsername() + "'";
+
+        int count = jdbcTemplate.queryForObject(sql, int.class);
+
+        if(count > 0){
+            return false;
+        } else {
+            return true;
+        }
 
     }
 }

@@ -22,7 +22,7 @@
 
         <!-- Create through form -->
         <div class="container">
-            <form th:action="@{/cards/createForm}" th:object="${cardForm}" method="POST">
+            <form th:action="@{/cards/create/form}" th:object="${cardForm}" method="POST">
                 <div class="row">
                     <div class="col l6">
                         <label for="name">Name</label>
@@ -81,7 +81,7 @@
     <!-- Create through text -->
     <div class="col l6">
         <div class="container">
-            <form th:action="@{/cards/createstring}" th:object="${cardStringForm}" method="post" id="cardStringForm">
+            <form th:action="@{/cards/create/string}" th:object="${cardStringForm}" method="post" id="cardStringForm">
                 <label style="font-size: 16px;" for="cardString">Format: Quantity; Name; Set; Grade; Altered; Mana cost;
                     Type; Description; Price;</label>
                 <textarea style="height: 330px;" id="cardString" form="cardStringForm" type="text" name="cardString"
