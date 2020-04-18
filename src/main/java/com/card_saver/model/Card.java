@@ -12,7 +12,7 @@ public class Card {
     private String description;
     private int userId;
     private String price;
-    private String imageSource = "crawwurm";
+    private String imageSource;
 
     public Card() {
     }
@@ -27,6 +27,7 @@ public class Card {
         this.description = description;
         this.userId = userId;
         this.price = price;
+        this.imageSource = "/images/" + name.replace(" ", "").replace("'", "").toLowerCase() + ".jpg";
     }
 
     public Card(int id, String name, String set, String grade, String altered, String manaCost, String type, String description, int userId, String price) {
@@ -40,6 +41,7 @@ public class Card {
         this.description = description;
         this.userId = userId;
         this.price = price;
+        this.imageSource = "/images/" + name.replace(" ", "").replace("'", "").toLowerCase() + ".jpg";
     }
 
     public String getImageSource() { return imageSource; }

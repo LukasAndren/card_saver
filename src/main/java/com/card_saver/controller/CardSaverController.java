@@ -69,6 +69,7 @@ public class CardSaverController {
         Card card = cardService.findById(cardId);
 
         model.addAttribute("card", card);
+        //model.addAttribute("cardImageSource", cardService.decipherImageSource(card));
 
         return "editCard";
     }
@@ -95,7 +96,7 @@ public class CardSaverController {
         return "createCard";
     }
 
-    @PostMapping(value = "/create/form")
+    @PostMapping(value = "cards//create/form")
     public String createCardThroughForm(@ModelAttribute(name = "cardForm") Card card, Model model){
         card.setUserId(currentUser.getId());
 

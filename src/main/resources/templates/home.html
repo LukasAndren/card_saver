@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <style>
+    td {padding-top: 5px; padding-bottom: 5px;}
+    </style>
 </head>
 <body>
 
@@ -80,14 +83,16 @@
 
 <!-- Stats -->
 <div class="center">
-    <p th:if="${numberOfCards != null}">Currently showing <a th:text="${numberOfCards}"></a> card(s) with a total value of <a
-            th:text="${sumOfPrices}"></a> euro</p>
+    <p th:if="${numberOfCards != null}">Currently showing <a th:text="${numberOfCards}"></a> card(s) with a total value
+        of <a
+                th:text="${sumOfPrices}"></a> euro</p>
 </div>
 
 <!-- Card table -->
 <div class="container">
     <table border="3">
         <tr>
+            <th></th>
             <th>Name:</th>
             <th>Set:</th>
             <th>Grade:</th>
@@ -100,6 +105,7 @@
             <th></th>
         </tr>
         <tr th:each="card : ${currentUsersCards}">
+            <td><img src="../static/images" th:src="@{${card.imageSource}}" style="height: 4.6rem; width: 3.3rem;"/></td>
             <td th:text="${card.name}"></td>
             <td th:text="${card.set}"></td>
             <td th:text="${card.grade}"></td>
@@ -109,7 +115,8 @@
             <td th:text="${card.description}"></td>
             <td th:text="${card.price}"></td>
             <td><a class="btn" th:href="@{/cards/{cardId}/edit(cardId=${card.id})}">Edit</a></td>
-            <td><a class="btn" th:href="@{/cards/{cardId}/delete(cardId=${card.id})}">Delete</a></td>
+            <td><a class="btn" th:href="@{/cards/{cardId}/delete(cardId=${card.id})}">Delete</a>
+            </td>
         </tr>
     </table>
 </div>

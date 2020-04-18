@@ -21,9 +21,9 @@
 </nav>
 
 <!-- Edit form -->
-<div class="container" style="padding-top: 35px;">
+<div class="row" style="padding-top: 35px;">
     <form th:action="@{/cards/{cardId}/edit(cardId=${card.id})}" th:object="${card}" method="POST">
-        <div class="container left">
+        <div class="col l4 offset-l1">
             <div class="hide">
                 <label for="id">Card ID</label>
                 <td id="id" th:utext="${card.id}">...</td>
@@ -60,8 +60,8 @@
         </div>
 
         <!-- Card image -->
-        <div class="container right">
-            <img src="../static/images/crawwurm.jpg" th:src="@{${'images/' + card.imageSource + '.jpg'}}"/>
+        <div class="col l4 offset-l2">
+            <img src="../static/images" th:src="@{${card.imageSource}}" style="height: 51rem; width: 36rem;"/>
         </div>
     </form>
 </div>
