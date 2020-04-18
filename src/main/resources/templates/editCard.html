@@ -21,43 +21,51 @@
 </nav>
 
 <!-- Edit form -->
-<div class="container center" style="padding-top: 35px;">
+<div class="container" style="padding-top: 35px;">
     <form th:action="@{/cards/{cardId}/edit(cardId=${card.id})}" th:object="${card}" method="POST">
-        <div class="hide">
-            <label for="id">Card ID</label>
-            <td id="id" th:utext="${card.id}">...</td>
+        <div class="container left">
+            <div class="hide">
+                <label for="id">Card ID</label>
+                <td id="id" th:utext="${card.id}">...</td>
+            </div>
+
+            <label for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}"/>
+
+            <label for="set">Set</label>
+            <input id="set" type="text" th:field="*{set}"/>
+
+            <label for="grade">Grade</label>
+            <input id="grade" type="text" th:field="*{grade}"/>
+
+            <label for="altered">Altered</label>
+            <input id="altered" type="text" th:field="*{altered}"/>
+
+            <label for="manaCost">Mana Cost</label>
+            <input id="manaCost" type="text" th:field="*{manaCost}"/>
+
+            <label for="type">Type</label>
+            <input id="type" type="text" th:field="*{type}"/>
+
+            <label for="description">Description</label>
+            <input id="description" type="text" th:field="*{description}"/>
+
+            <label for="userId">User ID</label>
+            <input id="userId" type="number" th:field="*{userId}"/>
+
+            <label for="price">Price</label>
+            <input id="price" type="text" th:field="*{price}"/>
+
+            <input class="btn" type="submit" th:value="Update"/>
         </div>
 
-        <label for="name">Name</label>
-        <input id="name" type="text" th:field="*{name}"/>
-
-        <label for="set">Set</label>
-        <input id="set" type="text" th:field="*{set}"/>
-
-        <label for="grade">Grade</label>
-        <input id="grade" type="text" th:field="*{grade}"/>
-
-        <label for="altered">Altered</label>
-        <input id="altered" type="text" th:field="*{altered}"/>
-
-        <label for="manaCost">Mana Cost</label>
-        <input id="manaCost" type="text" th:field="*{manaCost}"/>
-
-        <label for="type">Type</label>
-        <input id="type" type="text" th:field="*{type}"/>
-
-        <label for="description">Description</label>
-        <input id="description" type="text" th:field="*{description}"/>
-
-        <label for="userId">User ID</label>
-        <input id="userId" type="number" th:field="*{userId}"/>
-
-        <label for="price">Price</label>
-        <input id="price" type="text" th:field="*{price}"/>
-
-        <input class="btn" type="submit" th:value="Update"/>
+        <!-- Card image -->
+        <div class="container right">
+            <img src="../static/images/crawwurm.jpg" th:src="@{${'images/' + card.imageSource + '.jpg'}}"/>
+        </div>
     </form>
 </div>
+
 
 </body>
 </html>

@@ -12,6 +12,7 @@ public class Card {
     private String description;
     private int userId;
     private String price;
+    private String imageSource = "crawwurm";
 
     public Card() {
     }
@@ -40,6 +41,10 @@ public class Card {
         this.userId = userId;
         this.price = price;
     }
+
+    public String getImageSource() { return imageSource; }
+
+    public void setImageSource(String imageSource) { this.imageSource = imageSource; }
 
     public int getId() {
         return id;

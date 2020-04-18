@@ -142,6 +142,17 @@ public class CardServiceImpl implements ICardService {
     }
 
     @Override
+    public void decipherImageSource(Card card){
+        String imageSource = card.getName();
+
+        imageSource = imageSource.replace(" ", "");
+        imageSource = imageSource.replace("'", "");
+        imageSource = imageSource.toLowerCase();
+
+        card.setImageSource(imageSource);
+    }
+
+    @Override
     public void deleteCard(int cardId) {
         cardRepository.deleteCard(cardId);
     }
