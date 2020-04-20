@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * Handles services that results in/require users.
  */
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserService implements IUserService {
 
     @Autowired
     UserRepository userRepository;

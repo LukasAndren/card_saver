@@ -39,7 +39,7 @@ public class CardSaverController {
     public String login(@ModelAttribute(name = "loginForm") User user, Model model) {
         currentUser = userService.handleLogin(user);
 
-        //If the User's id is -1 the handleLogin method (above) has deemed the login to be faulty and a error should be shown
+        //If the User's id is -1, the handleLogin method (above) has deemed the login to be faulty and an error should be shown
         if(currentUser.getId() == -1){
             model.addAttribute("usernameNotUnique", currentUser.getUsername());
             return "login";
@@ -69,7 +69,7 @@ public class CardSaverController {
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("currentUsersCards", filteredCards);
         if(filteredCards.size() > 0){
-            model.addAttribute("sumOfPrices", cardService.getTotalPrice(filteredCards));
+            model.addAttribute("sumOfPrices", cardService.getSumOfAllPrices(filteredCards));
             model.addAttribute("numberOfCards", filteredCards.size());
         }
 
@@ -136,7 +136,7 @@ public class CardSaverController {
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("currentUsersCards", currentUsersCards);
         if(currentUsersCards.size() > 0){
-            model.addAttribute("sumOfPrices", cardService.getTotalPrice(currentUsersCards));
+            model.addAttribute("sumOfPrices", cardService.getSumOfAllPrices(currentUsersCards));
             model.addAttribute("numberOfCards", currentUsersCards.size());
         }
 

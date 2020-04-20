@@ -14,12 +14,10 @@ import java.util.List;
  * Handles services/logic that results in/require Cards.
  */
 @Service
-public class CardServiceImpl implements ICardService {
+public class CardService implements ICardService {
 
     @Autowired
     CardRepository cardRepository;
-
-    private List<Card> currentUsersCards;
 
     /**
      * Fetches a list of Cards that belong to the parameter User from the database.
@@ -30,7 +28,7 @@ public class CardServiceImpl implements ICardService {
      */
     @Override
     public List<Card> getAllCardsFromUser(User user) {
-        currentUsersCards = cardRepository.getAllCardsFromUser(user);
+        List<Card> currentUsersCards = cardRepository.getAllCardsFromUser(user);
 
         return currentUsersCards;
     }
@@ -55,9 +53,9 @@ public class CardServiceImpl implements ICardService {
      */
     @Override
     public void createCardThroughString(String cardString, User user) {
-        cardString = cardString.trim();
-
         try {
+            cardString = cardString.trim();
+
             int quantity = Integer.parseInt(cardString.substring(0, cardString.indexOf(";")).trim());
             cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
 
@@ -159,7 +157,7 @@ public class CardServiceImpl implements ICardService {
      * @return The total sum of prices.
      */
     @Override
-    public int getTotalPrice(List<Card> cards) {
+    public int getSumOfAllPrices(List<Card> cards) {
         int sum = 0;
 
         for (Card card : cards) {
