@@ -23,8 +23,9 @@ public class CardRepository {
     JdbcTemplate jdbcTemplate;
 
     /**
-     * Saves the Card to the database.
-     * @param card - The Card to be saved
+     * Inserts the parameter Card to the database.
+     *
+     * @param card - The Card containing the values to be inserted.
      */
     @Transactional
     public void saveCard(Card card){
@@ -55,6 +56,7 @@ public class CardRepository {
     /**
      * Fetches all Cards belonging to the parameter User from the database.
      * It does this by checking for Cards with the userId matching the input User's id.
+     *
      * @param user - The User whose cards are to be fetched.
      * @return All Cards belonging to the User.
      */
@@ -78,7 +80,8 @@ public class CardRepository {
     }
 
     /**
-     * Fetches a Card based on the cardId.
+     * Fetches a Card based on the parameter cardId.
+     *
      * @param cardId - The id of the Card to be fetched.
      * @return A Card object representing the row that matched.
      */
@@ -102,8 +105,9 @@ public class CardRepository {
     }
 
     /**
-     * Updates a row in the Card table to the input Card's variables.
-     * It finds the Card based on it's id.
+     * Updates a row in the Card table to the input Card's variables/values.
+     * It finds the right Card based on it's id.
+     *
      * @param card - The Card containing the new values.
      */
     @Transactional
@@ -116,6 +120,11 @@ public class CardRepository {
 
     }
 
+    /**
+     * Deletes the row whose id matches the parameter cardId.
+     *
+     * @param cardId - The id of the Card to be deleted.
+     */
     @Transactional
     public void deleteCard(int cardId){
         String sql = "DELETE FROM CARDS WHERE CARDID = " + cardId;

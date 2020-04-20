@@ -17,20 +17,6 @@ public class Card {
     public Card() {
     }
 
-    public Card(String name, String set, String grade, String altered, String manaCost, String type, String description, int userId, String price) {
-        this.name = name;
-        this.set = set;
-        this.grade = grade;
-        this.altered = altered;
-        this.manaCost = manaCost;
-        this.type = type;
-        this.description = description;
-        this.userId = userId;
-        this.price = price;
-        this.imageSource = "/images/" + name.replace(" ", "").replace("'", "")
-                .replace(":", "").replace("-", "").toLowerCase() + ".jpg";
-    }
-
     public Card(int id, String name, String set, String grade, String altered, String manaCost, String type, String description, int userId, String price) {
         this.id = id;
         this.name = name;
@@ -42,6 +28,8 @@ public class Card {
         this.description = description;
         this.userId = userId;
         this.price = price;
+
+        // Removes all apostrophes, empty spaces, colons and hyphens. Also adds "/images/ at the front and ".jpg" at the back.
         this.imageSource = "/images/" + name.replace(" ", "").replace("'", "")
                 .replace(":", "").replace("-", "").toLowerCase() + ".jpg";
     }

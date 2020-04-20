@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Handles request mapping calls from the "frontend"
+ */
 @Controller
 public class CardSaverController {
 
@@ -36,12 +39,21 @@ public class CardSaverController {
     public String login(@ModelAttribute(name = "loginForm") User user, Model model) {
         currentUser = userService.handleLogin(user);
 
+        //If the User's id is -1 the handleLogin method (above) has deemed the login to be faulty and a error should be shown
         if(currentUser.getId() == -1){
             model.addAttribute("usernameNotUnique", currentUser.getUsername());
             return "login";
         }
 
         return prepareNonSearchedHomePage(model);
+    }
+
+    @GetMapping(value = "/logout")
+    public String logo(){
+        currentUser = null;
+        currentUsersCards = null;
+
+        return "login";
     }
 
     @GetMapping(value = "/home")
@@ -69,7 +81,6 @@ public class CardSaverController {
         Card card = cardService.findById(cardId);
 
         model.addAttribute("card", card);
-        //model.addAttribute("cardImageSource", cardService.decipherImageSource(card));
 
         return "editCard";
     }
@@ -96,7 +107,7 @@ public class CardSaverController {
         return "createCard";
     }
 
-    @PostMapping(value = "cards//create/form")
+    @PostMapping(value = "cards/create/form")
     public String createCardThroughForm(@ModelAttribute(name = "cardForm") Card card, Model model){
         card.setUserId(currentUser.getId());
 
@@ -115,8 +126,9 @@ public class CardSaverController {
     /**
      * Prepares the Model attributes needed by Thymeleaf to display the home page properly,
      * and then returns the home page String.
-     * @param model - The Model being used by Thymeleaf
-     * @return "home", the String representing the HTML home page.
+     *
+     * @param model - The Model being used by Thymeleaf.
+     * @return "home" (the String representing the HTML home page).
      */
     public String prepareNonSearchedHomePage(Model model){
         currentUsersCards = cardService.getAllCardsFromUser(currentUser);

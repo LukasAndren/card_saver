@@ -21,6 +21,13 @@ public class CardServiceImpl implements ICardService {
 
     private List<Card> currentUsersCards;
 
+    /**
+     * Fetches a list of Cards that belong to the parameter User from the database.
+     * It uses the parameter User's id to find the right Cards.
+     *
+     * @param user - The User whose Cards are to be fetched.
+     * @return The list of Cards belonging to the parameter User.
+     */
     @Override
     public List<Card> getAllCardsFromUser(User user) {
         currentUsersCards = cardRepository.getAllCardsFromUser(user);
@@ -28,6 +35,12 @@ public class CardServiceImpl implements ICardService {
         return currentUsersCards;
     }
 
+    /**
+     * Inserts a row into the database's table "cards" with the values
+     * of the parameter Card.
+     *
+     * @param card
+     */
     @Override
     public void createCard(Card card) {
         cardRepository.saveCard(card);
@@ -35,10 +48,10 @@ public class CardServiceImpl implements ICardService {
 
     /**
      * Creates a Card based on the parameter String using substrings to single out the Card's variables.
-     * The Card is also saved to the database and will belong to the input User.
+     * The Card is also saved to the database and will belong to the parameter User.
      *
      * @param cardString - The string that contains the Card's variables.
-     * @param user       - The user that the Card is linked to.
+     * @param user - The user that the Card is linked to.
      */
     @Override
     public void createCardThroughString(String cardString, User user) {
@@ -72,7 +85,7 @@ public class CardServiceImpl implements ICardService {
             String price = cardString.substring(0, cardString.indexOf(";")).trim();
             cardString = cardString.substring(cardString.indexOf(";") + 1).trim();
 
-            Card card = new Card(name, set, grade, altered, manaCost, type, description, user.getId(), price);
+            Card card = new Card(0, name, set, grade, altered, manaCost, type, description, user.getId(), price);
 
             for (int i = 0; i < quantity; i++) {
                 cardRepository.saveCard(card);
@@ -88,6 +101,13 @@ public class CardServiceImpl implements ICardService {
         }
     }
 
+    /**
+     * Returns a Card object representing the Card with the matching id
+     * in the database.
+     *
+     * @param cardId - The id of the Card that is to be fetched.
+     * @return The Card object representing the row in the database.
+     */
     @Override
     public Card findById(int cardId) {
         Card card = cardRepository.findById(cardId);
@@ -95,6 +115,13 @@ public class CardServiceImpl implements ICardService {
         return card;
     }
 
+    /**
+     * Updates a Card in the database (a row in the Card table) to the
+     * parameter Card's variables/values. It finds the right Card in the
+     * database by using the parameter Card's id.
+     *
+     * @param card - The Card that contains the updated variables/values.
+     */
     @Override
     public void updateCard(Card card) {
         cardRepository.updateCard(card);
@@ -149,6 +176,11 @@ public class CardServiceImpl implements ICardService {
         return sum;
     }
 
+    /**
+     * Deletes the Card with the parameter id from the database.
+     *
+     * @param cardId - The id of the Card to be deleted
+     */
     @Override
     public void deleteCard(int cardId) {
         cardRepository.deleteCard(cardId);
