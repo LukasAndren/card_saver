@@ -7,7 +7,11 @@ import com.card_saver.service.ICardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,6 +33,8 @@ public class CardService implements ICardService {
     @Override
     public List<Card> getAllCardsFromUser(User user) {
         List<Card> currentUsersCards = cardRepository.getAllCardsFromUser(user);
+
+        currentUsersCards.forEach(card -> setImageSource(card));
 
         return currentUsersCards;
     }
@@ -110,6 +116,8 @@ public class CardService implements ICardService {
     public Card findById(int cardId) {
         Card card = cardRepository.findById(cardId);
 
+        setImageSource(card);
+
         return card;
     }
 
@@ -138,10 +146,15 @@ public class CardService implements ICardService {
         List<Card> filteredCards = new ArrayList<>();
 
         for (Card card : allCards) {
-            if (card.getName().contains(filterCard.getName()) && card.getSet().contains(filterCard.getSet())
-                    && card.getGrade().contains(filterCard.getGrade()) && card.getAltered().contains(filterCard.getAltered())
-                    && card.getManaCost().contains(filterCard.getManaCost()) && card.getType().contains(filterCard.getType())
-                    && card.getDescription().contains(filterCard.getDescription()) && card.getPrice().contains(filterCard.getPrice())) {
+            if (card.getName().toLowerCase().contains(filterCard.getName().toLowerCase())
+                    && card.getSet().toLowerCase().contains(filterCard.getSet().toLowerCase())
+                    && card.getGrade().toLowerCase().contains(filterCard.getGrade().toLowerCase())
+                    && card.getAltered().toLowerCase().contains(filterCard.getAltered().toLowerCase())
+                    && card.getManaCost().toLowerCase().contains(filterCard.getManaCost().toLowerCase())
+                    && card.getType().toLowerCase().contains(filterCard.getType().toLowerCase())
+                    && card.getDescription().toLowerCase().contains(filterCard.getDescription().toLowerCase())
+                    && card.getPrice().toLowerCase().contains(filterCard.getPrice().toLowerCase())) {
+
                 filteredCards.add(card);
             }
         }
@@ -177,10 +190,29 @@ public class CardService implements ICardService {
     /**
      * Deletes the Card with the parameter id from the database.
      *
-     * @param cardId - The id of the Card to be deleted
+     * @param cardId - The id of the Card to be deleted.
      */
     @Override
     public void deleteCard(int cardId) {
         cardRepository.deleteCard(cardId);
+    }
+
+    @Override
+    public void setImageSource(Card card){
+        // Removes all apostrophes, empty spaces, colons and hyphens. Also adds ".jpg" at the end.
+        String imageName = card.getName().replace(" ", "").replace("'", "")
+                .replace(":", "").replace("-", "").toLowerCase() + ".jpg";
+
+        Path imageSourcePath = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/images");
+
+        List<String> fileNames = new ArrayList<>();
+
+        Arrays.asList(imageSourcePath.toFile().listFiles()).forEach(file -> fileNames.add(file.getName()));
+
+        if(fileNames.contains(imageName)){
+            card.setImageSource("/images/" + imageName);
+        } else {
+            card.setImageSource("/images/cardback.jpg");
+        }
     }
 }

@@ -14,7 +14,7 @@
 <nav class="nav-wrapper grey darken-2">
     <div class="container">
         <a class="brand-logo" th:text="'Welcome ' + ${currentUser.username}"></a>
-        <a class="brand-logo center">Homepage</a>
+        <a th:href="@{/home}" class="brand-logo center">Homepage</a>
         <ul class="right">
             <li><a th:href="@{/logout}">Log out</a></li>
             <li><a th:href="@{/cards/create}">Create cards</a></li>
@@ -81,11 +81,11 @@
     </div>
 </div>
 
-<!-- Stats -->
+<!-- Card info -->
 <div class="center">
     <p th:if="${numberOfCards != null}">Currently showing <a th:text="${numberOfCards}"></a> card(s) with a total value
-        of <a
-                th:text="${sumOfPrices}"></a> euro</p>
+        of <a th:text="${sumOfPrices}"></a> euro</p>
+    <p th:if="${numberOfCards == null}">There are no cards to show</p>
 </div>
 
 <!-- Card table -->

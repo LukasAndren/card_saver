@@ -86,10 +86,10 @@ public class CardServiceTest {
         Card cardOne = new Card(1, "Name", "Set", "Grade", "Altered",
                 "Mana cost", "Type", "Description", 1, "300");
 
-        Card cardTwo = new Card(1, "Name", "Set", "Grade", "Altered",
+        Card cardTwo = new Card(2, "Name", "Set", "Grade", "Altered",
                 "Mana cost", "Type", "Description", 1, "275");
 
-        Card cardThree = new Card(1, "Name", "Set", "Grade", "Altered",
+        Card cardThree = new Card(3, "Name", "Set", "Grade", "Altered",
                 "Mana cost", "Type", "Description", 1, "120");
 
         List<Card> allCards = new ArrayList<>();

@@ -28,10 +28,6 @@ public class Card {
         this.description = description;
         this.userId = userId;
         this.price = price;
-
-        // Removes all apostrophes, empty spaces, colons and hyphens. Also adds "/images/ at the front and ".jpg" at the back.
-        this.imageSource = "/images/" + name.replace(" ", "").replace("'", "")
-                .replace(":", "").replace("-", "").toLowerCase() + ".jpg";
     }
 
     public String getImageSource() { return imageSource; }
