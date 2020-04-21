@@ -197,6 +197,13 @@ public class CardService implements ICardService {
         cardRepository.deleteCard(cardId);
     }
 
+    /**
+     * Checks whether the parameter Card can be correctly mapped onto a specific image by
+     * checking for an image that matches the parameter Card's name. If none is found
+     * the parameter Card's imageSource is set to the default image "cardback.jpg".
+     *
+     * @param card - The Card to be mapped to an image.
+     */
     @Override
     public void setImageSource(Card card){
         // Removes all apostrophes, empty spaces, colons and hyphens. Also adds ".jpg" at the end.
