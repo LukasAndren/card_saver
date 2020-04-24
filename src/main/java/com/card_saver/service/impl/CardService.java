@@ -210,11 +210,11 @@ public class CardService implements ICardService {
         String imageName = card.getName().replace(" ", "").replace("'", "")
                 .replace(":", "").replace("-", "").toLowerCase() + ".jpg";
 
-        Path imageSourcePath = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/images");
+        Path imageDirectoryPath = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/images");
 
         List<String> fileNames = new ArrayList<>();
 
-        Arrays.asList(imageSourcePath.toFile().listFiles()).forEach(file -> fileNames.add(file.getName()));
+        Arrays.asList(imageDirectoryPath.toFile().listFiles()).forEach(file -> fileNames.add(file.getName()));
 
         if(fileNames.contains(imageName)){
             card.setImageSource("/images/" + imageName);

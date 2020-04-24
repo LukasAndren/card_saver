@@ -2,13 +2,18 @@ package com.card_saver.controller;
 
 import com.card_saver.model.Card;
 import com.card_saver.model.User;
+
 import com.card_saver.service.ICardService;
 import com.card_saver.service.IUserService;
+
+import com.card_saver.parser.Parser;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,7 +108,10 @@ public class CardSaverController {
     }
 
     @GetMapping(value = "/cards/create")
-    public String showCreateCards(){
+    public String showCreateCards(Model model){
+
+        model.addAttribute("allCardNames", Parser.getAllCardNames());
+
         return "createCard";
     }
 
@@ -113,12 +121,16 @@ public class CardSaverController {
 
         cardService.createCard(card);
 
+        model.addAttribute("allCardNames", Parser.getAllCardNames());
+
         return "createCard";
     }
 
     @PostMapping(value = "/cards/create/string")
     public String createCardsThroughText(@ModelAttribute(name = "cardString") String cardString, Model model){
         cardService.createCardThroughString(cardString, currentUser);
+
+        model.addAttribute("allCardNames", Parser.getAllCardNames());
 
         return "createCard";
     }

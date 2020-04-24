@@ -29,7 +29,10 @@
                 <div class="row">
                     <div class="col l6">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" autofocus="autofocus">
+                        <input type="text" id="name" name="name" autofocus="autofocus" list="cardDataList">
+                        <datalist id="cardDataList" >
+                            <option th:each="name : ${allCardNames}" th:value="${name}" ></option>
+                        </datalist>
                     </div>
 
                     <div class="col l6">
