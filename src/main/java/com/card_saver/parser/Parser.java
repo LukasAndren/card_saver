@@ -7,12 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Handles parsing of text based resources. The class' content are all static
+ * and its constructor private to prohibit instancing.
+ */
 public final class Parser {
 
     private static List<String> allCardNames;
 
     private Parser(){}
 
+    /**
+     * Parses all the comma separated card names present in "CardNames.txt" into Strings
+     * and stores them in a List<String>.
+     */
     public static void parseAllCardNames(){
         allCardNames = new ArrayList<>();
 
@@ -31,6 +39,13 @@ public final class Parser {
         }
     }
 
+    /**
+     * Reads the parameter File by using a Scanner with the parameter File
+     * as the input stream and returns the entire file's content.
+     * @param file - The file to be read.
+     * @return The entire text content of the parameter File.
+     * @throws FileNotFoundException
+     */
     public static String readFile(File file) throws FileNotFoundException {
         Scanner fileScanner = new Scanner(file);
 
