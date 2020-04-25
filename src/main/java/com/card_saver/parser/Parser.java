@@ -54,6 +54,7 @@ public final class Parser {
             fileContent += fileScanner.nextLine();
         }
 
+        fileScanner.close();
         return fileContent;
     }
 
