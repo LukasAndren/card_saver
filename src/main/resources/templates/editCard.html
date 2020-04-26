@@ -34,10 +34,22 @@
             <input id="name" type="text" th:field="*{name}"/>
 
             <label for="set">Set</label>
-            <input id="set" type="text" th:field="*{set}"/>
+            <input id="set" type="text" th:field="*{set}" list="setDatalist"/>
+            <datalist id="setDatalist">
+                <option th:each="setName : ${allSetNames}" th:value="${setName}"></option>
+            </datalist>
 
             <label for="grade">Grade</label>
-            <input id="grade" type="text" th:field="*{grade}"/>
+            <input id="grade" type="text" th:field="*{grade}" list="gradeDatalist"/>
+            <datalist id="gradeDatalist">
+                <option value="M"></option>
+                <option value="NM"></option>
+                <option value="EX"></option>
+                <option value="GD"></option>
+                <option value="LP"></option>
+                <option value="PL"></option>
+                <option value="PR"></option>
+            </datalist>
 
             <label for="altered">Altered</label>
             <input id="altered" type="text" th:field="*{altered}"/>
@@ -46,7 +58,15 @@
             <input id="manaCost" type="text" th:field="*{manaCost}"/>
 
             <label for="type">Type</label>
-            <input id="type" type="text" th:field="*{type}"/>
+            <input id="type" type="text" th:field="*{type}" list="typeDatalist"/>
+            <datalist id="typeDatalist">
+                <option value="Artifact"></option>
+                <option value="Creature"></option>
+                <option value="Enchantment"></option>
+                <option value="Instant"></option>
+                <option value="Land"></option>
+                <option value="Sorcery"></option>
+            </datalist>
 
             <label for="description">Description</label>
             <input id="description" type="text" th:field="*{description}"/>

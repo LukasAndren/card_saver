@@ -86,6 +86,7 @@ public class CardSaverController {
         Card card = cardService.findById(cardId);
 
         model.addAttribute("card", card);
+        model.addAttribute("allSetNames", Parser.getAllSetNames());
 
         return "editCard";
     }
@@ -110,7 +111,7 @@ public class CardSaverController {
     @GetMapping(value = "/cards/create")
     public String showCreateCards(Model model){
 
-        model.addAttribute("allCardNames", Parser.getAllCardNames());
+        prepareCreateCardPage(model);
 
         return "createCard";
     }
@@ -121,7 +122,7 @@ public class CardSaverController {
 
         cardService.createCard(card);
 
-        model.addAttribute("allCardNames", Parser.getAllCardNames());
+        prepareCreateCardPage(model);
 
         return "createCard";
     }
@@ -130,7 +131,7 @@ public class CardSaverController {
     public String createCardsThroughText(@ModelAttribute(name = "cardString") String cardString, Model model){
         cardService.createCardThroughString(cardString, currentUser);
 
-        model.addAttribute("allCardNames", Parser.getAllCardNames());
+        prepareCreateCardPage(model);
 
         return "createCard";
     }
@@ -153,5 +154,12 @@ public class CardSaverController {
         }
 
         return "home";
+    }
+
+    public String prepareCreateCardPage(Model model){
+        model.addAttribute("allSetNames", Parser.getAllSetNames());
+        model.addAttribute("allCardNames", Parser.getAllCardNames());
+
+        return "createCard";
     }
 }

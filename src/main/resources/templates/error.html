@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>404</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+</head>
+<body>
+<div class="container center">
+    <div class="row">
+        <h1>Oops, looks like something went wrong!</h1>
+    </div>
+    <div class="row">
+        <h3>Let's try that again </h3>
+    </div>
+    <div class="row">
+        <a class="btn-large" th:href="@{/logout}">Login</a>
+    </div>
+</div>
+</body>
+</html>

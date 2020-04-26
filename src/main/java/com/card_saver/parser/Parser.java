@@ -14,6 +14,7 @@ import java.util.Scanner;
 public final class Parser {
 
     private static List<String> allCardNames;
+    private static List<String> allSetNames;
 
     private Parser(){}
 
@@ -40,6 +41,28 @@ public final class Parser {
     }
 
     /**
+     * Parses all the comma separated set names present in "SetNames.txt" into Strings
+     * and stores them in a List<String>.
+     */
+    public static void parseAllSetNames(){
+        allSetNames = new ArrayList<>();
+
+        try{
+            File setNamesFile = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/SetNames.txt").toFile();
+
+            String setNamesFileContent = readFile(setNamesFile);
+
+            while(setNamesFileContent.length() != 0){
+                String setName = setNamesFileContent.substring(0, setNamesFileContent.indexOf(";"));
+                allSetNames.add(setName);
+                setNamesFileContent = setNamesFileContent.substring(setNamesFileContent.indexOf(";") + 1);
+            }
+        } catch (FileNotFoundException e){
+            System.out.println("Could not parse set names. Exception: " + e.toString());
+        }
+    }
+
+    /**
      * Reads the parameter File by using a Scanner with the parameter File
      * as the input stream and returns the entire file's content.
      * @param file - The file to be read.
@@ -60,5 +83,9 @@ public final class Parser {
 
     public static List<String> getAllCardNames(){
         return allCardNames;
+    }
+
+    public static List<String> getAllSetNames(){
+        return allSetNames;
     }
 }

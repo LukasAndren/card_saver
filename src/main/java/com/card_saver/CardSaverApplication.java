@@ -11,6 +11,7 @@ public class CardSaverApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		Parser.parseAllCardNames();
+		Parser.parseAllSetNames();
 		SpringApplication.run(CardSaverApplication.class, args);
 	}
 

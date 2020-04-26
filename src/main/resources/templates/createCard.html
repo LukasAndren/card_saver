@@ -29,21 +29,32 @@
                 <div class="row">
                     <div class="col l6">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" autofocus="autofocus" list="cardDataList">
-                        <datalist id="cardDataList">
-                            <option th:each="name : ${allCardNames}" th:value="${name}" ></option>
+                        <input type="text" id="name" name="name" autofocus="autofocus" list="nameDatalist">
+                        <datalist id="nameDatalist">
+                            <option th:each="name : ${allCardNames}" th:value="${name}"></option>
                         </datalist>
                     </div>
-
                     <div class="col l6">
                         <label for="set">Set</label>
-                        <input type="text" id="set" name="set">
+                        <input type="text" id="set" name="set" list="setDatalist">
+                        <datalist id="setDatalist">
+                            <option th:each="setName : ${allSetNames}" th:value="${setName}"></option>
+                        </datalist>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col l6">
                         <label for="grade">Grade</label>
-                        <input type="text" id="grade" name="grade">
+                        <input type="text" id="grade" name="grade" list="gradeDatalist">
+                        <datalist id="gradeDatalist">
+                            <option value="M"></option>
+                            <option value="NM"></option>
+                            <option value="EX"></option>
+                            <option value="GD"></option>
+                            <option value="LP"></option>
+                            <option value="PL"></option>
+                            <option value="PR"></option>
+                        </datalist>
                     </div>
 
                     <div class="col l6">
@@ -60,7 +71,15 @@
 
                     <div class="col l6">
                         <label for="type">Type</label>
-                        <input type="text" id="type" name="type">
+                        <input type="text" id="type" name="type" list="typeDatalist">
+                        <datalist id="typeDatalist">
+                            <option value="Artifact"></option>
+                            <option value="Creature"></option>
+                            <option value="Enchantment"></option>
+                            <option value="Instant"></option>
+                            <option value="Land"></option>
+                            <option value="Sorcery"></option>
+                        </datalist>
                     </div>
                 </div>
 
