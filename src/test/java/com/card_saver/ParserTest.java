@@ -14,7 +14,7 @@ public class ParserTest {
 
     @Test
     public void testReadFile() throws IOException {
-        File cardNamesFile = File.createTempFile("", ".txt");
+        File cardNamesFile = File.createTempFile("cardNames", ".txt");
         String cardNames = "Ancestrall Recall;Lightning Bolt;Scryb Sprites;";
         BufferedWriter writer = new BufferedWriter(new FileWriter(cardNamesFile, true));
         writer.append(cardNames);

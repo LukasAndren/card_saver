@@ -40,6 +40,7 @@ public class CardServiceTest {
     @Test
     void testCreateCardThroughString(){
         String cardString = "1; TestName; TestSet; TestGrade; TestAltered; TestManaCost; TestType; TestDescription; TestPrice;";
+
         User user = new User();
         user.setId(1);
         user.setUsername("TestUsername");
@@ -58,6 +59,19 @@ public class CardServiceTest {
         assertEquals(argument.getValue().getType(), "TestType");
         assertEquals(argument.getValue().getDescription(), "TestDescription");
         assertEquals(argument.getValue().getPrice(), "TestPrice");
+    }
+
+    @Test
+    void testDecipherImageSource(){
+        Card cardA = new Card(1, "Scryb Sprites", "", "", "", "", "", "", 1, "");
+        Card cardB = new Card(1, "TestName", "Alpha", "", "", "", "", "", 1, "");
+
+        cardService.decihperImageSource(cardA);
+        cardService.decihperImageSource(cardB);
+
+        assertTrue(cardA.getImageSource().endsWith("scrybsprites.jpg"));
+        assertTrue(cardB.getImageSource().endsWith("cardback.jpg"));
+
     }
 
     @Test
@@ -100,5 +114,32 @@ public class CardServiceTest {
         int sum = Integer.parseInt(cardOne.getPrice()) + Integer.parseInt(cardTwo.getPrice()) + Integer.parseInt(cardThree.getPrice());
 
         assertEquals(sum, cardService.getSumOfAllPrices(allCards));
+    }
+
+    @Test
+    void testSortCards(){
+        Card cardA = new Card(1, "Aaa", "Alpha", "", "", "", "", "", 1, "");
+        Card cardB = new Card(2, "Bbb", "Alpha", "", "", "", "", "", 1, "");
+        Card cardC = new Card(3, "Aaa", "Beta", "", "", "", "", "", 1, "");
+        Card cardD = new Card(4, "Bbb", "Beta", "", "", "", "", "", 1, "");
+
+        List<Card> unsortedCards = new ArrayList<>();
+
+        unsortedCards.add(cardC);
+        unsortedCards.add(cardA);
+        unsortedCards.add(cardB);
+        unsortedCards.add(cardD);
+
+        assertEquals(unsortedCards.get(0), cardC);
+        assertEquals(unsortedCards.get(1), cardA);
+        assertEquals(unsortedCards.get(2), cardB);
+        assertEquals(unsortedCards.get(3), cardD);
+
+        List<Card> sortedCards = cardService.sortCards(unsortedCards);
+
+        assertEquals(sortedCards.get(0), cardA);
+        assertEquals(sortedCards.get(1), cardB);
+        assertEquals(sortedCards.get(2), cardC);
+        assertEquals(sortedCards.get(3), cardD);
     }
 }
