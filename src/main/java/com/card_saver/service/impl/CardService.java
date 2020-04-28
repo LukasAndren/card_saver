@@ -2,17 +2,20 @@ package com.card_saver.service.impl;
 
 import com.card_saver.model.Card;
 import com.card_saver.model.User;
-import com.card_saver.repository.CardRepository;
-import com.card_saver.service.ICardService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.io.File;
+import com.card_saver.repository.CardRepository;
+
+import com.card_saver.service.ICardService;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Handles services/logic that results in/require Cards.
@@ -25,7 +28,7 @@ public class CardService implements ICardService {
 
     /**
      * Fetches a list of Cards that belong to the parameter User from the database.
-     * It uses the parameter User's id to find the right Cards.
+     * Also sets the imageSource of each fetched Card and calls the sortCards method.
      *
      * @param user - The User whose Cards are to be fetched.
      * @return The list of Cards belonging to the parameter User.
@@ -34,7 +37,11 @@ public class CardService implements ICardService {
     public List<Card> getAllCardsFromUser(User user) {
         List<Card> currentUsersCards = cardRepository.getAllCardsFromUser(user);
 
-        currentUsersCards.forEach(card -> setImageSource(card));
+        currentUsersCards.forEach(card -> decihperImageSource(card));
+
+        if(currentUsersCards.size() > 1){
+            currentUsersCards = sortCards(currentUsersCards);
+        }
 
         return currentUsersCards;
     }
@@ -116,7 +123,7 @@ public class CardService implements ICardService {
     public Card findById(int cardId) {
         Card card = cardRepository.findById(cardId);
 
-        setImageSource(card);
+        decihperImageSource(card);
 
         return card;
     }
@@ -158,6 +165,11 @@ public class CardService implements ICardService {
                 filteredCards.add(card);
             }
         }
+
+        if(filteredCards.size() > 1){
+            filteredCards = sortCards(filteredCards);
+        }
+
         return filteredCards;
     }
 
@@ -205,7 +217,7 @@ public class CardService implements ICardService {
      * @param card - The Card to be mapped to an image.
      */
     @Override
-    public void setImageSource(Card card){
+    public void decihperImageSource(Card card){
         // Removes all apostrophes, empty spaces, colons and hyphens. Also adds ".jpg" at the end.
         String imageName = card.getName().replace(" ", "").replace("'", "")
                 .replace(":", "").replace("-", "").toLowerCase() + ".jpg";
@@ -221,5 +233,19 @@ public class CardService implements ICardService {
         } else {
             card.setImageSource("/images/cardback.jpg");
         }
+    }
+
+    /**
+     * Sorts the parameter List of Cards alphabetically by set and name.
+     *
+     * @param cards - The List of Cards to be sorted.
+     * @return - The alphabetically sorted List.
+     */
+    @Override
+    public List<Card> sortCards(List<Card> cards){
+        return cards.stream()
+                .sorted((cardA, cardB) -> cardA.getName().compareTo(cardB.getName()))
+                .sorted((cardA, cardB) -> cardA.getSet().compareTo(cardB.getSet()))
+                .collect(Collectors.toList());
     }
 }

@@ -64,7 +64,8 @@ public final class Parser {
 
     /**
      * Reads the parameter File by using a Scanner with the parameter File
-     * as the input stream and returns the entire file's content.
+     * as the input stream and returns the entire file's text content.
+     *
      * @param file - The file to be read.
      * @return The entire text content of the parameter File.
      * @throws FileNotFoundException

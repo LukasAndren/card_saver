@@ -8,16 +8,15 @@ import com.card_saver.service.IUserService;
 
 import com.card_saver.parser.Parser;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Handles request mapping calls from the "frontend"
+ * Handles request mapping to and from the "frontend".
  */
 @Controller
 public class CardSaverController {
@@ -156,6 +155,13 @@ public class CardSaverController {
         return "home";
     }
 
+    /**
+     * Prepares the Model attributes needed by Thymeleaf to display the home page properly,
+     * and then returns the create card page String.
+     *
+     * @param model - The Model being used by Thymeleaf.
+     * @return "createCard" (the String representing the HTML create card page).
+     */
     public String prepareCreateCardPage(Model model){
         model.addAttribute("allSetNames", Parser.getAllSetNames());
         model.addAttribute("allCardNames", Parser.getAllCardNames());

@@ -1,8 +1,11 @@
 package com.card_saver.service.impl;
 
 import com.card_saver.model.User;
-import com.card_saver.repository.UserRepository;
+
 import com.card_saver.service.IUserService;
+
+import com.card_saver.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

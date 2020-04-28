@@ -14,5 +14,6 @@ public interface ICardService {
     List<Card> filterCards(List<Card> allCards, Card filterCard);
     int getSumOfAllPrices(List<Card> cards);
     void deleteCard(int cardId);
-    void setImageSource(Card card);
+    void decihperImageSource(Card card);
+    List<Card> sortCards(List<Card> unsortedCards);
 }
