@@ -85,7 +85,7 @@ public class CardRepository {
      * @return A Card object representing the row that matched.
      */
     @Transactional
-    public Card findById(int cardId){
+    public Card findCardById(int cardId){
         String sql = "SELECT * FROM CARDS WHERE CARDID = " + cardId;
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
                 new Card(

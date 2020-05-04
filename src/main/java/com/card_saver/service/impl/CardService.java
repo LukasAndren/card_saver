@@ -121,7 +121,7 @@ public class CardService implements ICardService {
      */
     @Override
     public Card findById(int cardId) {
-        Card card = cardRepository.findById(cardId);
+        Card card = cardRepository.findCardById(cardId);
 
         decihperImageSource(card);
 

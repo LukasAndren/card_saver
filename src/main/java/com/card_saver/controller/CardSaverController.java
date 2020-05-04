@@ -71,7 +71,7 @@ public class CardSaverController {
         List<Card> filteredCards = cardService.filterCards(currentUsersCards, card);
 
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("currentUsersCards", filteredCards);
+        model.addAttribute("displayCards", filteredCards);
         if(filteredCards.size() > 0){
             model.addAttribute("sumOfPrices", cardService.getSumOfAllPrices(filteredCards));
             model.addAttribute("numberOfCards", filteredCards.size());
@@ -146,7 +146,7 @@ public class CardSaverController {
         currentUsersCards = cardService.getAllCardsFromUser(currentUser);
 
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("currentUsersCards", currentUsersCards);
+        model.addAttribute("displayCards", currentUsersCards);
         if(currentUsersCards.size() > 0){
             model.addAttribute("sumOfPrices", cardService.getSumOfAllPrices(currentUsersCards));
             model.addAttribute("numberOfCards", currentUsersCards.size());

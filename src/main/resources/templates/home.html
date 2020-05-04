@@ -104,7 +104,7 @@
             <th></th>
             <th></th>
         </tr>
-        <tr th:each="card : ${currentUsersCards}">
+        <tr th:each="card : ${displayCards}">
             <td><img src="../static/images" th:src="@{${card.imageSource}}" style="height: 4.6rem; width: 3.3rem;"/></td>
             <td th:text="${card.name}"></td>
             <td th:text="${card.set}"></td>
