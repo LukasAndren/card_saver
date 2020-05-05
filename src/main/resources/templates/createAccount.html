@@ -9,34 +9,29 @@
 
 <nav class="nav-wrapper grey darken-2">
     <div class="container">
-        <a class="brand-logo center">Welcome to Lukas's Card Saver</a>
+        <a class="brand-logo center">Create account</a>
+        <ul class="right">
+            <li><a th:href="@{/login}">Login</a></li>
+        </ul>
     </div>
 </nav>
 
-<!-- Login form -->
-<div class="container center" style="padding-top: 10rem; width: 20rem;">
-    <form th:action="@{/login}" th:object="${loginForm}" method="post">
+<!-- Create account form -->
+<div class="container center" style = "padding-top: 10rem; width: 20rem;">
+    <form th:action="@{/account/create}" th:object="${loginForm}" method="post">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" autofocus="autofocus">
 
         <label for="password">Password</label>
         <input type="password" id="password" name="password">
         <br/>
-        <input class="btn" type="submit" value="Log in">
+        <input class="btn" type="submit" value="Create">
     </form>
 
-    <div class="row">
-        <h5>Or</h5>
-    </div>
-
-    <div class="row">
-        <a class="btn" th:href="@{/account/create}">Create account</a>
-    </div>
-
-<!-- Error container -->
+    <!-- Error container -->
     <div class="container">
-        <p th:if="${faultyCredentialsError}" style="font-size: 18; color: red;"
-           th:text="'That username and password combination does not exist, please try again.'"></p>
+        <p th:if="${usernameNotUniqueError}" style="font-size: 18; color: red;"
+           th:text="'The username ¨' + ${usernameNotUniqueError} + '¨ is already in use, please try a different one.'"></p>
     </div>
 </div>
 

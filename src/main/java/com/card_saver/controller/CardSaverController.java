@@ -45,8 +45,26 @@ public class CardSaverController {
 
         //If the User's id is -1, the handleLogin method (above) has deemed the login to be faulty and an error should be shown
         if(currentUser.getId() == -1){
-            model.addAttribute("usernameNotUnique", currentUser.getUsername());
+            model.addAttribute("faultyCredentialsError", currentUser.getUsername());
             return "login";
+        }
+
+        return prepareNonSearchedHomePage(model);
+    }
+
+    @GetMapping(value = "/account/create")
+    public String showCreateAccount(){
+        return "createAccount";
+    }
+
+    @PostMapping(value = "/account/create")
+    public String createAccount(@ModelAttribute(name = "loginForm") User user, Model model) {
+        currentUser = userService.createAccount(user);
+
+        //If the User's id is -1, the createAccount method (above) has found that the username is not unique and an error should be shown
+        if(currentUser.getId() == -1){
+            model.addAttribute("usernameNotUniqueError", currentUser.getUsername());
+            return "createAccount";
         }
 
         return prepareNonSearchedHomePage(model);
