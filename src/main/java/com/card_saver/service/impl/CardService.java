@@ -37,7 +37,7 @@ public class CardService implements ICardService {
     public List<Card> getAllCardsFromUser(User user) {
         List<Card> currentUsersCards = cardRepository.getAllCardsFromUser(user);
 
-        currentUsersCards.forEach(card -> decihperImageSource(card));
+        currentUsersCards.forEach(card -> decipherImageSource(card));
 
         if(currentUsersCards.size() > 1){
             currentUsersCards = sortCards(currentUsersCards);
@@ -123,7 +123,7 @@ public class CardService implements ICardService {
     public Card findById(int cardId) {
         Card card = cardRepository.findCardById(cardId);
 
-        decihperImageSource(card);
+        decipherImageSource(card);
 
         return card;
     }
@@ -217,7 +217,7 @@ public class CardService implements ICardService {
      * @param card - The Card to be mapped to an image.
      */
     @Override
-    public void decihperImageSource(Card card){
+    public void decipherImageSource(Card card){
         // Removes all apostrophes, empty spaces, colons and hyphens. Also adds ".jpg" at the end.
         String imageName = card.getName().replace(" ", "").replace("'", "")
                 .replace(":", "").replace("-", "").toLowerCase() + ".jpg";

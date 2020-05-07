@@ -66,8 +66,8 @@ public class CardServiceTest {
         Card cardA = new Card(1, "Scryb Sprites", "", "", "", "", "", "", 1, "");
         Card cardB = new Card(1, "TestName", "Alpha", "", "", "", "", "", 1, "");
 
-        cardService.decihperImageSource(cardA);
-        cardService.decihperImageSource(cardB);
+        cardService.decipherImageSource(cardA);
+        cardService.decipherImageSource(cardB);
 
         assertTrue(cardA.getImageSource().endsWith("scrybsprites.jpg"));
         assertTrue(cardB.getImageSource().endsWith("cardback.jpg"));

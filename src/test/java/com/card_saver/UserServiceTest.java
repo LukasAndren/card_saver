@@ -34,7 +34,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void testHandleLoginExistsTrue(){
+    void testHandleLoginUserExistsTrue(){
     user = new User();
     user.setUsername("TestUsername");
     user.setPassword("TestPassword");
@@ -44,22 +44,45 @@ public class UserServiceTest {
 
     userService.handleLogin(user);
 
-    assertEquals(user.getId(), 1);
-
+    assertEquals(1, user.getId());
     }
 
     @Test
-    void testHandleLoginUsernameNotUnique(){
+    void testHandleLoginUserExistsFalse(){
         user = new User();
         user.setUsername("TestUsername");
         user.setPassword("TestPassword");
 
         when(userRepository.userExists(user)).thenReturn(false);
-        when(userRepository.usernameIsUnique(user)).thenReturn(false);
 
         userService.handleLogin(user);
 
-        assertEquals(user.getId(), -1);
+        assertEquals(-1, user.getId());
+    }
 
+    @Test
+    void testCreateAccountUsernameUniqueTrue(){
+        user = new User();
+        user.setUsername("TestUsername");
+        user.setPassword("TestPassword");
+
+        when(userRepository.usernameIsUnique(user)).thenReturn(true);
+
+        userService.createAccount(user);
+
+        assertEquals(0, user.getId());
+    }
+
+    @Test
+    void testCreateAccountUsernameUniqueFalse(){
+        user = new User();
+        user.setUsername("TestUsername");
+        user.setPassword("TestPassword");
+
+        when(userRepository.usernameIsUnique(user)).thenReturn(false);
+
+        userService.createAccount(user);
+
+        assertEquals(-1, user.getId());
     }
 }

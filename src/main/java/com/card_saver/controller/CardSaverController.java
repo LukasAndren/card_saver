@@ -41,14 +41,15 @@ public class CardSaverController {
 
     @PostMapping(value = "/login")
     public String login(@ModelAttribute(name = "loginForm") User user, Model model) {
-        currentUser = userService.handleLogin(user);
+        userService.handleLogin(user);
 
         //If the User's id is -1, the handleLogin method (above) has deemed the login to be faulty and an error should be shown
-        if(currentUser.getId() == -1){
+        if(user.getId() == -1){
             model.addAttribute("faultyCredentialsError", currentUser.getUsername());
             return "login";
         }
 
+        currentUser = user;
         return prepareNonSearchedHomePage(model);
     }
 
@@ -59,14 +60,15 @@ public class CardSaverController {
 
     @PostMapping(value = "/account/create")
     public String createAccount(@ModelAttribute(name = "loginForm") User user, Model model) {
-        currentUser = userService.createAccount(user);
+        userService.createAccount(user);
 
         //If the User's id is -1, the createAccount method (above) has found that the username is not unique and an error should be shown
-        if(currentUser.getId() == -1){
+        if(user.getId() == -1){
             model.addAttribute("usernameNotUniqueError", currentUser.getUsername());
             return "createAccount";
         }
 
+        currentUser = user;
         return prepareNonSearchedHomePage(model);
     }
 
