@@ -98,4 +98,16 @@ public class UserRepository {
         }
 
     }
+
+    /**
+     * Deletes the parameter User from the database.
+     *
+     * @param user - The User to be deleted.
+     */
+    @Transactional
+    public void deleteUser(User user){
+        String sql = "DELETE FROM USERS WHERE USERNAME = '" + user.getUsername() + "'";
+
+        jdbcTemplate.execute(sql);
+    }
 }

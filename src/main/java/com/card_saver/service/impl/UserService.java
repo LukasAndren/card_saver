@@ -54,4 +54,14 @@ public class UserService implements IUserService {
             userRepository.createUser(user);
         }
     }
+
+    /**
+     * Calls on the UserRepository to delete the parameter User.
+     *
+     * @param user - The User to be deleted.
+     */
+    @Override
+    public void deleteUser(User user) {
+        userRepository.deleteUser(user);
+    }
 }

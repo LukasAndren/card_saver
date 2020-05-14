@@ -45,7 +45,7 @@ public class CardSaverController {
 
         //If the User's id is -1, the handleLogin method (above) has deemed the login to be faulty and an error should be shown
         if(user.getId() == -1){
-            model.addAttribute("faultyCredentialsError", currentUser.getUsername());
+            model.addAttribute("faultyCredentialsError", user.getUsername());
             return "login";
         }
 
@@ -72,13 +72,22 @@ public class CardSaverController {
         return prepareNonSearchedHomePage(model);
     }
 
+    @GetMapping(value = "/account/delete")
+    public String deleteAccount(){
+        userService.deleteUser(currentUser);
+        currentUsersCards.forEach(card -> cardService.deleteCard(card.getId()));
+
+        return logout();
+    }
+
     @GetMapping(value = "/logout")
-    public String logo(){
+    public String logout(){
         currentUser = null;
         currentUsersCards = null;
 
         return "login";
     }
+
 
     @GetMapping(value = "/home")
     public String showHome(Model model){
